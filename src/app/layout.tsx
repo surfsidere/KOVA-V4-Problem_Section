@@ -3,8 +3,8 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: 'Interactive Diagnosis Deck',
-  description: 'An interactive card deck to diagnose business pain points.',
+  title: 'KOVA - Transformando Beneficios Corporativos',
+  description: 'Una experiencia narrativa inmersiva que muestra cómo KOVA revoluciona los beneficios corporativos con tecnología inteligente y personalización avanzada.',
 };
 
 export default function RootLayout({

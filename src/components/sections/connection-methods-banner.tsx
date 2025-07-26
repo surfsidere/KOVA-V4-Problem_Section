@@ -114,11 +114,11 @@ export function ConnectionMethodsBanner({
   return (
     <div 
       ref={bannerRef}
-      className={cn("relative py-24", className)}
+      className={cn("relative py-12", className)}
     >
       <div className="max-w-6xl mx-auto px-4">
-        <div className="bg-card/60 backdrop-blur-md border border-border/50 rounded-2xl p-8 lg:p-12 shadow-2xl">
-          <div className="text-center mb-12">
+        <div className="bg-card/60 backdrop-blur-md border border-border/50 rounded-2xl p-6 lg:p-8 shadow-2xl">
+          <div className="text-center mb-8">
             <h3 className="text-2xl font-bold text-foreground mb-4">
               Conéctate de la manera que prefieras
             </h3>

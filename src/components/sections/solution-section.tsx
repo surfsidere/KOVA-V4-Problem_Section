@@ -94,19 +94,19 @@ export function SolutionSection({
   return (
     <section 
       ref={sectionRef}
-      className={cn("relative min-h-screen flex flex-col items-center justify-center px-4 bg-gradient-to-b from-background via-muted/20 to-background", className)}
+      className={cn("relative min-h-[70vh] flex flex-col items-center justify-center px-4 bg-gradient-to-b from-background via-muted/20 to-background", className)}
     >
       <div className="text-center max-w-4xl mx-auto">
         <h2 
           ref={titleRef}
-          className="font-headline text-5xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl mb-8 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
+          className="font-headline text-5xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent"
         >
           {title}
         </h2>
         
         <p 
           ref={subtitleRef}
-          className="text-muted-foreground max-w-3xl mx-auto text-xl opacity-0"
+          className="text-muted-foreground max-w-3xl mx-auto text-2xl font-medium opacity-0"
         >
           {subtitle}
         </p>

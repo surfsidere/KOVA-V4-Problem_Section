@@ -1,30 +1,30 @@
 import { SmoothScrollProvider } from "@/components/providers/smooth-scroll-provider";
 import { IntroSection } from "@/components/sections/intro-section";
-import { ProblemCardsContainer } from "@/components/sections/problem-cards-container";
 import { SolutionSection } from "@/components/sections/solution-section";
 import { ConnectionMethodsBanner } from "@/components/sections/connection-methods-banner";
+import { FinalCTASection } from "@/components/sections/final-cta-section";
 
 export default function Home() {
   return (
     <SmoothScrollProvider>
       <main className="relative">
-        {/* Hero/Intro Section */}
+        {/* Hero/Intro Section with Cards */}
         <IntroSection 
           title="Las asistencias tradicionales se han quedado atrás."
           subtitle="Sus ofertas genéricas y procesos confusos no generan valor ni conexión, perdiendo relevancia frente a las necesidades del usuario moderno."
         />
 
-        {/* Problem Cards with Vacuum Effect */}
-        <ProblemCardsContainer />
-
         {/* Solution Reveal */}
         <SolutionSection 
           title="Somos La Solución"
-          subtitle="Transformamos la experiencia de beneficios corporativos con tecnología inteligente, personalización avanzada y un enfoque centrado en el usuario que genera valor real para empleados y empresas."
+          subtitle="Mas Conexión, Mas Uso, Mas Valor"
         />
 
         {/* Connection Methods */}
-        <ConnectionMethodsBanner />
+        <ConnectionMethodsBanner className="py-16" />
+
+        {/* Final CTA with Toggle */}
+        <FinalCTASection />
       </main>
     </SmoothScrollProvider>
   );

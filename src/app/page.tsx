@@ -8,11 +8,13 @@ export default function Home() {
           <h1 className="font-headline text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl mb-4">
             Las asistencias tradicionales se han quedado atrás.
           </h1>
+        </div>
+        <InteractiveDiagnosisDeck />
+        <div className="text-center mt-12">
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
             Sus ofertas genéricas y procesos confusos no generan valor ni conexión, perdiendo relevancia frente a las necesidades del usuario moderno.
           </p>
         </div>
-        <InteractiveDiagnosisDeck />
       </div>
     </main>
   );

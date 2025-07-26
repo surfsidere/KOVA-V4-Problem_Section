@@ -1,4 +1,5 @@
 import { InteractiveDiagnosisDeck } from "@/components/interactive-diagnosis-deck";
+import { SolutionSection } from "@/components/solution-section";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
             Sus ofertas genéricas y procesos confusos no generan valor ni conexión, perdiendo relevancia frente a las necesidades del usuario moderno.
           </p>
         </div>
+        <SolutionSection />
       </div>
     </main>
   );

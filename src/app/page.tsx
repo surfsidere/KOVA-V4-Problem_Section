@@ -10,7 +10,7 @@ export default function Home() {
           </h1>
         </div>
         <InteractiveDiagnosisDeck />
-        <div className="text-center mt-12">
+        <div className="text-center mt-24">
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
             Sus ofertas genéricas y procesos confusos no generan valor ni conexión, perdiendo relevancia frente a las necesidades del usuario moderno.
           </p>

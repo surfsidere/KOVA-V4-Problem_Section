@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, Clock, Shuffle, Search, TrendingDown, Frown } from "lucide-react";
 
 interface PainPoint {
@@ -52,10 +52,10 @@ export const InteractiveDiagnosisDeck = ({
   const [isInitialized, setIsInitialized] = useState(false);
 
   // Initialize the deck animation
-  useState(() => {
+  useEffect(() => {
     const timer = setTimeout(() => setIsInitialized(true), 100);
     return () => clearTimeout(timer);
-  });
+  }, []);
 
   const handleCardClick = (cardId: number) => {
     if (selectedCard === cardId) {
@@ -94,7 +94,7 @@ export const InteractiveDiagnosisDeck = ({
   };
 
   return (
-    <div className="relative w-full min-h-[500px] flex items-center justify-center p-8 bg-background">
+    <div className="relative w-full min-h-[500px] flex items-center justify-center p-8">
       <div className="relative w-full max-w-xl h-[400px]">
         <AnimatePresence mode="wait">
           {painPoints.map((painPoint, index) => {
@@ -114,7 +114,7 @@ export const InteractiveDiagnosisDeck = ({
             return (
               <motion.div
                 key={painPoint.id}
-                className="absolute inset-0 cursor-pointer"
+                className="absolute w-80 h-96 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
                 initial={{
                   x: 0,
                   y: -100,
@@ -235,7 +235,7 @@ export const InteractiveDiagnosisDeck = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-background/80 backdrop-blur-sm -z-10"
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm z-40"
             onClick={() => setSelectedCard(null)}
           />
         )}

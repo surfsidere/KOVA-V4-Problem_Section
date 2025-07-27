@@ -181,8 +181,8 @@ export function FluidScrollHero({
         {/* Interactive Cards - Perfect Magic Prompt Version */}
         <div 
           ref={cardsRef}
-          className="mb-12 opacity-0"
-          style={{ pointerEvents: 'none' }} // Initially disabled
+          className="mb-12"
+          style={{ pointerEvents: 'auto' }}
         >
           <InteractiveDiagnosisDeck />
         </div>

@@ -68,10 +68,15 @@ export const InteractiveDiagnosisDeck = ({
   const getCardPosition = (index: number, total: number) => {
     const baseOffset = 60;
     const rotationBase = 6;
+    
+    // Container: 896px × 400px, Card: 320px × 384px
+    // Center position: (896-320)/2 = 288px, (400-384)/2 = 8px
+    const centerX = 288;
+    const centerY = 8;
 
     return {
-      x: (index - Math.floor(total / 2)) * baseOffset,
-      y: index * 25,
+      x: centerX + (index - Math.floor(total / 2)) * baseOffset,
+      y: centerY + index * 25,
       rotate: (index - Math.floor(total / 2)) * rotationBase,
       scale: 1 - (index * 0.01),
       zIndex: total - index
@@ -80,9 +85,12 @@ export const InteractiveDiagnosisDeck = ({
 
   const getInactiveCardPosition = (index: number, selectedIndex: number) => {
     const offset = index < selectedIndex ? -120 : 120;
+    const centerX = 288;
+    const centerY = 8;
+    
     return {
-      x: offset,
-      y: 60,
+      x: centerX + offset,
+      y: centerY + 60,
       rotate: index < selectedIndex ? -20 : 20,
       scale: 0.75,
       zIndex: 1
@@ -100,7 +108,9 @@ export const InteractiveDiagnosisDeck = ({
 
             let position;
             if (isSelected) {
-              position = { x: 0, y: 0, rotate: 0, scale: 1, zIndex: 20 };
+              const centerX = 288;
+              const centerY = 8;
+              position = { x: centerX, y: centerY, rotate: 0, scale: 1, zIndex: 20 };
             } else if (isAnySelected) {
               position = getInactiveCardPosition(index, selectedIndex);
             } else {
@@ -110,7 +120,7 @@ export const InteractiveDiagnosisDeck = ({
             return (
               <motion.div
                 key={painPoint.id}
-                className="absolute w-80 h-96 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                className="absolute w-80 h-96 cursor-pointer"
                 initial={{
                   x: 0,
                   y: -100,

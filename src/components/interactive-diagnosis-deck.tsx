@@ -66,10 +66,6 @@ export const InteractiveDiagnosisDeck = ({
   };
 
   const getCardPosition = (index: number, total: number) => {
-    if (selectedCard !== null) {
-      return { x: 0, y: 0, rotate: 0, scale: 1, zIndex: 10 };
-    }
-
     const baseOffset = 60;
     const rotationBase = 6;
 

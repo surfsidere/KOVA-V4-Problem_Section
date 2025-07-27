@@ -99,7 +99,25 @@ export const InteractiveDiagnosisDeck = ({
       offsetLeft: document.body.offsetLeft,
       offsetTop: document.body.offsetTop,
       scrollLeft: document.body.scrollLeft,
-      scrollTop: document.body.scrollTop
+      scrollTop: document.body.scrollTop,
+      clientWidth: document.body.clientWidth,
+      scrollWidth: document.body.scrollWidth
+    });
+    
+    // Check computed styles
+    const bodyStyles = window.getComputedStyle(document.body);
+    console.log('Body computed styles:', {
+      margin: bodyStyles.margin,
+      padding: bodyStyles.padding,
+      transform: bodyStyles.transform,
+      position: bodyStyles.position
+    });
+    
+    const htmlStyles = window.getComputedStyle(document.documentElement);
+    console.log('HTML computed styles:', {
+      margin: htmlStyles.margin,
+      padding: htmlStyles.padding,
+      transform: htmlStyles.transform
     });
     
     return () => clearTimeout(timer);
@@ -168,19 +186,19 @@ export const InteractiveDiagnosisDeck = ({
         </>
       )}
       
+      {/* Temporarily simplified container for debugging */}
       <div 
-        className="fixed inset-0 pointer-events-none z-10"
+        className="fixed pointer-events-none z-10"
         style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          left: '0',
-          top: '0',
-          width: '100vw',
-          height: '100vh'
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)',
+          border: '2px solid blue',
+          width: '800px',
+          height: '500px'
         }}
       >
-        <div className="relative pointer-events-auto">
+        <div className="relative pointer-events-auto w-full h-full">
         <AnimatePresence mode="wait">
           {painPoints.map((painPoint, index) => {
             const isSelected = selectedCard === painPoint.id;
@@ -215,10 +233,11 @@ export const InteractiveDiagnosisDeck = ({
                   zIndex: painPoints.length - index
                 }}
                 animate={{
-                  x: position.x,
-                  y: position.y,
-                  rotate: position.rotate,
-                  scale: position.scale,
+                  // TEMPORARILY DISABLED FOR DEBUGGING
+                  // x: position.x,
+                  // y: position.y,
+                  // rotate: position.rotate,
+                  // scale: position.scale,
                   opacity: isInitialized ? 1 : 0,
                   zIndex: position.zIndex
                 }}

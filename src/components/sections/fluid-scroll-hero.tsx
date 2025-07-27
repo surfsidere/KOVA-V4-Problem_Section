@@ -71,7 +71,7 @@ export function FluidScrollHero({
       }
     });
 
-    // Fluid entrance sequence
+    // Improved choreography: Title → Cards → Subtitle
     entranceTl
       .to(titleEl, {
         opacity: 1,
@@ -90,13 +90,13 @@ export function FluidScrollHero({
             cardsEl.style.pointerEvents = 'auto';
           }
         }
-      }, 0.3)
+      }, 1.5)  // Cards appear after title is complete
       .to(subtitleEl, {
         opacity: 1,
         y: 0,
         duration: 1,
         ease: "power2.out"
-      }, 0.6);
+      }, 2.5);  // Subtitle appears after cards settle
 
     // Sticky behavior - everything stays fixed during interaction
     ScrollTrigger.create({
@@ -175,7 +175,7 @@ export function FluidScrollHero({
         className="relative min-h-screen flex flex-col items-center justify-center px-4"
       >
         {/* Title */}
-        <div className="text-center max-w-4xl mx-auto mb-16">
+        <div className="text-center max-w-4xl mx-auto mb-8">
           <h1 
             ref={titleRef}
             className="font-headline text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl opacity-0"
@@ -187,7 +187,7 @@ export function FluidScrollHero({
         {/* Interactive Cards - Perfect Magic Prompt Version */}
         <div 
           ref={cardsRef}
-          className="text-center w-full mb-20"
+          className="text-center w-full mb-12"
           style={{ pointerEvents: 'auto' }}
         >
           <InteractiveDiagnosisDeck />
@@ -205,7 +205,7 @@ export function FluidScrollHero({
       </div>
       
       {/* Spacer for vacuum effect */}
-      <div className="h-[30vh]" />
+      <div className="h-[10vh]" />
     </div>
   );
 }

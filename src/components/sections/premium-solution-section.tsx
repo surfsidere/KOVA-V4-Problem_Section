@@ -203,7 +203,7 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
         className="max-w-6xl mx-auto mb-12 opacity-0"
       >
         <div className="bg-white border border-gray-100 rounded-2xl p-6 lg:p-8 shadow-lg">
-          <div className="text-center mb-8">
+          <div className="text-center mb-8 kova-card-header-gradient rounded-t-xl -m-6 lg:-m-8 mb-2 p-6 lg:p-8">
             <h3 className="kova-light-primary text-2xl mb-4">
               Conéctate de la manera que prefieras
             </h3>
@@ -219,8 +219,10 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
                 className="text-center group hover:scale-105 transition-transform duration-300"
               >
                 <div className="flex justify-center mb-4">
-                  <div className="p-4 rounded-full kova-icon-gradient-dark transition-colors duration-300">
-                    {method.icon}
+                  <div className="p-4 rounded-full kova-icon-gradient-dark transition-all duration-300 drop-shadow-[0_0_2px_rgba(255,249,225,0.5)] group-hover:drop-shadow-[0_0_6px_rgba(255,249,225,0.7)]">
+                    <div className="text-[#FFF9E1]">
+                      {method.icon}
+                    </div>
                   </div>
                 </div>
                 <h4 className="kova-light-primary text-xl mb-2">
@@ -249,11 +251,11 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
             onClick={() => handlePathSelection('instituciones')}
             className={cn(
               "group relative px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300",
-              "border-2 border-gray-200 hover:border-gray-300",
-              "focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2",
+              "kova-selector-gradient text-[#FFF9E1] hover:shadow-lg",
+              "focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2",
               selectedPath === 'instituciones' 
-                ? "bg-white kova-light-primary shadow-lg scale-105 border-gray-400" 
-                : "bg-white kova-light-primary hover:bg-gray-50"
+                ? "shadow-lg scale-105 drop-shadow-[0_0_4px_rgba(255,249,225,0.4)]" 
+                : "hover:drop-shadow-[0_0_2px_rgba(255,249,225,0.3)]"
             )}
           >
             <span className="flex items-center gap-2">
@@ -269,11 +271,11 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
             onClick={() => handlePathSelection('aliados')}
             className={cn(
               "group relative px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300",
-              "border-2 border-gray-200 hover:border-gray-300",
-              "focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2",
+              "kova-selector-gradient text-[#FFF9E1] hover:shadow-lg",
+              "focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2",
               selectedPath === 'aliados' 
-                ? "bg-white kova-light-primary shadow-lg scale-105 border-gray-400" 
-                : "bg-white kova-light-primary hover:bg-gray-50"
+                ? "shadow-lg scale-105 drop-shadow-[0_0_4px_rgba(255,249,225,0.4)]" 
+                : "hover:drop-shadow-[0_0_2px_rgba(255,249,225,0.3)]"
             )}
           >
             <span className="flex items-center gap-2">

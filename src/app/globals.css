@@ -124,7 +124,17 @@
 
   /* Enhanced dark icon gradient for better distinction */
   .kova-icon-gradient-dark {
-    background: linear-gradient(to bottom right, #2A2A2A 0%, rgba(255,249,225,0.2) 50%, #2A2A2A 100%);
+    background: linear-gradient(to bottom right, rgba(2,8,18,0.7) 0%, rgba(255,249,225,0.25) 50%, rgba(2,8,18,0.7) 100%);
+  }
+
+  /* Card header gradient with lower opacity */
+  .kova-card-header-gradient {
+    background: linear-gradient(to right, rgba(2,8,18,0.1) 0%, rgba(255,249,225,0.02) 50%, rgba(2,8,18,0.1) 100%);
+  }
+
+  /* Instituciones/Aliados selector gradient */
+  .kova-selector-gradient {
+    background: linear-gradient(to right, rgba(2,8,18,0.7) 0%, rgba(255,249,225,0.25) 50%, rgba(2,8,18,0.7) 100%);
   }
   
   /* Reduced motion support */

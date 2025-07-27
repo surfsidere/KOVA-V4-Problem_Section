@@ -15,12 +15,12 @@ interface PainPoint {
 // Diagnostic marker component
 const CenterMarker = () => (
   <div 
-    className="fixed w-4 h-4 bg-red-500 z-50"
+    className="fixed w-4 h-4 bg-[#FFF9E1] z-50"
     style={{
       left: '50vw',
       top: '50vh',
       transform: 'translate(-50%, -50%)',
-      boxShadow: '0 0 0 2px white, 0 0 0 4px red'
+      boxShadow: '0 0 0 2px white, 0 0 0 4px #FFF9E1'
     }}
   />
 );
@@ -38,8 +38,8 @@ const GridOverlay = () => (
       backgroundPosition: 'center center'
     }}
   >
-    <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-red-500/30" />
-    <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-red-500/30" />
+    <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-[#FFF9E1]/30" />
+    <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#FFF9E1]/30" />
   </div>
 );
 
@@ -154,7 +154,7 @@ export const InteractiveDiagnosisDeck = ({
             <div>Center: {typeof window !== 'undefined' ? `${window.innerWidth/2}, ${window.innerHeight/2}` : 'loading'}</div>
             <button 
               onClick={() => setShowDiagnostics(false)}
-              className="mt-2 px-2 py-1 bg-red-500 rounded"
+              className="mt-2 px-2 py-1 bg-[#FFF9E1] text-black rounded"
             >
               Hide Diagnostics
             </button>

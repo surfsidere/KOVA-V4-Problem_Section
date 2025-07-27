@@ -187,7 +187,7 @@ export function FluidScrollHero({
         {/* Interactive Cards - Perfect Magic Prompt Version */}
         <div 
           ref={cardsRef}
-          className="text-center max-w-4xl mx-auto mb-20"
+          className="text-center w-full mb-20"
           style={{ pointerEvents: 'auto' }}
         >
           <InteractiveDiagnosisDeck />

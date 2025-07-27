@@ -178,7 +178,7 @@ export function FluidScrollHero({
           </h1>
         </div>
         
-        {/* Interactive Cards - Preserved Original Component */}
+        {/* Interactive Cards - Perfect Magic Prompt Version */}
         <div 
           ref={cardsRef}
           className="mb-12 opacity-0"

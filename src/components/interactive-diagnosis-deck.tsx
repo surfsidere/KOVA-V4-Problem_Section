@@ -2,61 +2,60 @@
 
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, type ReactNode } from "react";
+import { useState } from "react";
 import { X, Clock, Shuffle, Search, TrendingDown, Frown } from "lucide-react";
 
 interface PainPoint {
   id: number;
   title: string;
   description: string;
-  icon?: ReactNode;
+  icon?: React.ReactNode;
 }
 
-const defaultPainPoints: PainPoint[] = [
-  {
-    id: 1,
-    title: "Experiencia Genérica",
-    description: "Los empleados reciben beneficios estándar que no se adaptan a sus necesidades individuales, reduciendo su satisfacción y engagement.",
-    icon: <Frown className="w-6 h-6" />
-  },
-  {
-    id: 2,
-    title: "Soporte Lento",
-    description: "Los procesos de atención al cliente son lentos e ineficientes, generando frustración y pérdida de tiempo valioso.",
-    icon: <Clock className="w-6 h-6" />
-  },
-  {
-    id: 3,
-    title: "Procesos Confusos",
-    description: "La navegación y gestión de beneficios es compleja y poco intuitiva, dificultando el acceso a los servicios.",
-    icon: <Shuffle className="w-6 h-6" />
-  },
-  {
-    id: 4,
-    title: "Falta de Transparencia",
-    description: "Los empleados no tienen visibilidad clara de sus beneficios disponibles ni del estado de sus solicitudes.",
-    icon: <Search className="w-6 h-6" />
-  },
-  {
-    id: 5,
-    title: "Costos Elevados",
-    description: "Los gastos administrativos y operativos son altos debido a procesos manuales y sistemas desactualizados.",
-    icon: <TrendingDown className="w-6 h-6" />
-  }
-];
-
 export const InteractiveDiagnosisDeck = ({
-  painPoints = defaultPainPoints
+  painPoints = [
+    {
+      id: 1,
+      title: "Experiencia Genérica",
+      description: "Los empleados reciben beneficios estándar que no se adaptan a sus necesidades individuales, reduciendo su satisfacción y engagement.",
+      icon: <Frown className="w-6 h-6 text-red-500" />
+    },
+    {
+      id: 2,
+      title: "Soporte Lento",
+      description: "Los procesos de atención al cliente son lentos e ineficientes, generando frustración y pérdida de tiempo valioso.",
+      icon: <Clock className="w-6 h-6 text-red-500" />
+    },
+    {
+      id: 3,
+      title: "Procesos Confusos",
+      description: "La navegación y gestión de beneficios es compleja y poco intuitiva, dificultando el acceso a los servicios.",
+      icon: <Shuffle className="w-6 h-6 text-red-500" />
+    },
+    {
+      id: 4,
+      title: "Falta de Transparencia",
+      description: "Los empleados no tienen visibilidad clara de sus beneficios disponibles ni del estado de sus solicitudes.",
+      icon: <Search className="w-6 h-6 text-red-500" />
+    },
+    {
+      id: 5,
+      title: "Costos Elevados",
+      description: "Los gastos administrativos y operativos son altos debido a procesos manuales y sistemas desactualizados.",
+      icon: <TrendingDown className="w-6 h-6 text-red-500" />
+    }
+  ]
 }: {
   painPoints?: PainPoint[];
 }) => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
 
-  useEffect(() => {
+  // Initialize the deck animation
+  useState(() => {
     const timer = setTimeout(() => setIsInitialized(true), 100);
     return () => clearTimeout(timer);
-  }, []);
+  });
 
   const handleCardClick = (cardId: number) => {
     if (selectedCard === cardId) {
@@ -95,9 +94,9 @@ export const InteractiveDiagnosisDeck = ({
   };
 
   return (
-    <div className="relative w-full min-h-[500px] flex items-center justify-center p-8">
+    <div className="relative w-full min-h-[500px] flex items-center justify-center p-8 bg-background">
       <div className="relative w-full max-w-xl h-[400px]">
-        <AnimatePresence>
+        <AnimatePresence mode="wait">
           {painPoints.map((painPoint, index) => {
             const isSelected = selectedCard === painPoint.id;
             const isAnySelected = selectedCard !== null;
@@ -116,7 +115,6 @@ export const InteractiveDiagnosisDeck = ({
               <motion.div
                 key={painPoint.id}
                 className="absolute inset-0 cursor-pointer"
-                style={{ originX: 0.5, originY: 0.5 }}
                 initial={{
                   x: 0,
                   y: -100,
@@ -148,15 +146,15 @@ export const InteractiveDiagnosisDeck = ({
                 onClick={() => handleCardClick(painPoint.id)}
               >
                 <div className={cn(
-                  "w-full h-full bg-card border rounded-xl shadow-lg overflow-visible",
+                  "w-full h-full bg-card border border-border rounded-xl shadow-lg overflow-visible",
                   "transition-shadow duration-300",
                   isSelected ? "shadow-2xl" : "shadow-lg hover:shadow-xl"
                 )}>
                   {/* Card Header */}
-                  <div className="p-6 border-b bg-muted/30">
+                  <div className="p-6 border-b border-border bg-muted/30">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-primary/10 text-primary">
+                        <div className="p-2 rounded-lg bg-red-100 text-red-600">
                           {painPoint.icon}
                         </div>
                         <h3 className="text-lg font-semibold text-foreground">
@@ -173,7 +171,6 @@ export const InteractiveDiagnosisDeck = ({
                             setSelectedCard(null);
                           }}
                           className="p-2 rounded-full hover:bg-muted transition-colors"
-                          aria-label="Close card"
                         >
                           <X className="w-4 h-4 text-muted-foreground" />
                         </motion.button>
@@ -182,7 +179,7 @@ export const InteractiveDiagnosisDeck = ({
                   </div>
 
                   {/* Warning icon - always visible for dramatic stacking effect */}
-                  <div className="absolute top-4 right-4 z-20 text-primary/50">
+                  <div className="absolute top-4 right-4 z-20">
                     {painPoint.icon}
                   </div>
 
@@ -199,7 +196,7 @@ export const InteractiveDiagnosisDeck = ({
                           <p className="text-muted-foreground leading-relaxed">
                             {painPoint.description}
                           </p>
-                          <div className="mt-4 pt-4 border-t">
+                          <div className="mt-4 pt-4 border-t border-border">
                             <span className="text-sm text-muted-foreground">
                               Haz clic para cerrar
                             </span>
@@ -238,7 +235,7 @@ export const InteractiveDiagnosisDeck = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10"
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm -z-10"
             onClick={() => setSelectedCard(null)}
           />
         )}

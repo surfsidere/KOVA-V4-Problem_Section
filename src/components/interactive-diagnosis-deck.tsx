@@ -12,6 +12,37 @@ interface PainPoint {
   icon?: React.ReactNode;
 }
 
+// Diagnostic marker component
+const CenterMarker = () => (
+  <div 
+    className="fixed w-4 h-4 bg-red-500 z-50"
+    style={{
+      left: '50vw',
+      top: '50vh',
+      transform: 'translate(-50%, -50%)',
+      boxShadow: '0 0 0 2px white, 0 0 0 4px red'
+    }}
+  />
+);
+
+// Grid overlay for viewport visualization
+const GridOverlay = () => (
+  <div 
+    className="fixed inset-0 pointer-events-none z-40"
+    style={{
+      background: `
+        linear-gradient(to right, rgba(255,0,0,0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,0,0,0.1) 1px, transparent 1px)
+      `,
+      backgroundSize: '10vw 10vh',
+      backgroundPosition: 'center center'
+    }}
+  >
+    <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-red-500/30" />
+    <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-red-500/30" />
+  </div>
+);
+
 export const InteractiveDiagnosisDeck = ({
   painPoints = [
     {
@@ -50,10 +81,27 @@ export const InteractiveDiagnosisDeck = ({
 }) => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [showDiagnostics, setShowDiagnostics] = useState(true);
 
   // Initialize the deck animation
   useEffect(() => {
     const timer = setTimeout(() => setIsInitialized(true), 100);
+    
+    // Debug logging
+    console.log('=== CENTERING DIAGNOSTICS ===');
+    console.log('Viewport:', {
+      width: window.innerWidth,
+      height: window.innerHeight,
+      centerX: window.innerWidth / 2,
+      centerY: window.innerHeight / 2
+    });
+    console.log('Document body:', {
+      offsetLeft: document.body.offsetLeft,
+      offsetTop: document.body.offsetTop,
+      scrollLeft: document.body.scrollLeft,
+      scrollTop: document.body.scrollTop
+    });
+    
     return () => clearTimeout(timer);
   }, []);
 
@@ -73,13 +121,17 @@ export const InteractiveDiagnosisDeck = ({
     const centerX = 0;
     const centerY = 0;
 
-    return {
+    const position = {
       x: centerX + (index - Math.floor(total / 2)) * baseOffset,
       y: centerY + index * 25,
       rotate: (index - Math.floor(total / 2)) * rotationBase,
       scale: 1 - (index * 0.01),
       zIndex: total - index
     };
+    
+    console.log(`Card ${index} position:`, position);
+    
+    return position;
   };
 
   const getInactiveCardPosition = (index: number, selectedIndex: number) => {
@@ -97,19 +149,38 @@ export const InteractiveDiagnosisDeck = ({
   };
 
   return (
-    <div 
-      className="fixed inset-0 pointer-events-none z-10"
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        left: '0',
-        top: '0',
-        width: '100vw',
-        height: '100vh'
-      }}
-    >
-      <div className="relative pointer-events-auto">
+    <>
+      {/* Diagnostic components */}
+      {showDiagnostics && (
+        <>
+          <CenterMarker />
+          <GridOverlay />
+          <div className="fixed top-4 left-4 bg-black/80 text-white p-4 rounded z-50 font-mono text-xs">
+            <div>Viewport: {typeof window !== 'undefined' ? `${window.innerWidth}x${window.innerHeight}` : 'loading'}</div>
+            <div>Center: {typeof window !== 'undefined' ? `${window.innerWidth/2}, ${window.innerHeight/2}` : 'loading'}</div>
+            <button 
+              onClick={() => setShowDiagnostics(false)}
+              className="mt-2 px-2 py-1 bg-red-500 rounded"
+            >
+              Hide Diagnostics
+            </button>
+          </div>
+        </>
+      )}
+      
+      <div 
+        className="fixed inset-0 pointer-events-none z-10"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          left: '0',
+          top: '0',
+          width: '100vw',
+          height: '100vh'
+        }}
+      >
+        <div className="relative pointer-events-auto">
         <AnimatePresence mode="wait">
           {painPoints.map((painPoint, index) => {
             const isSelected = selectedCard === painPoint.id;
@@ -248,5 +319,6 @@ export const InteractiveDiagnosisDeck = ({
         </AnimatePresence>
       </div>
     </div>
+    </>
   );
 };

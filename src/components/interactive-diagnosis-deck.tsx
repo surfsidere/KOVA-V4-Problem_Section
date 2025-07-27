@@ -48,7 +48,7 @@ export const InteractiveDiagnosisDeck = ({
     {
       id: 1,
       title: "Experiencia Genérica",
-      description: "Los empleados reciben beneficios estándar que no se adaptan a sus necesidades individuales, reduciendo su satisfacción y engagement.",
+      description: "Los usuarios reciben beneficios estándar que no se adaptan a sus necesidades individuales, reduciendo su satisfacción y engagement.",
       icon: <Frown className="w-6 h-6 text-red-500" />
     },
     {
@@ -66,7 +66,7 @@ export const InteractiveDiagnosisDeck = ({
     {
       id: 4,
       title: "Falta de Transparencia",
-      description: "Los empleados no tienen visibilidad clara de sus beneficios disponibles ni del estado de sus solicitudes.",
+      description: "Los usuarios no tienen visibilidad clara de sus beneficios disponibles ni del estado de sus solicitudes.",
       icon: <Search className="w-6 h-6 text-red-500" />
     },
     {

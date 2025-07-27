@@ -69,10 +69,9 @@ export const InteractiveDiagnosisDeck = ({
     const baseOffset = 60;
     const rotationBase = 6;
     
-    // Container: 896px × 400px, Card: 320px × 384px
-    // Center position: (896-320)/2 = 288px, (400-384)/2 = 8px
-    const centerX = 288;
-    const centerY = 8;
+    // Use CSS centering: position from center (0,0) with offsets
+    const centerX = 0;
+    const centerY = 0;
 
     return {
       x: centerX + (index - Math.floor(total / 2)) * baseOffset,
@@ -85,8 +84,8 @@ export const InteractiveDiagnosisDeck = ({
 
   const getInactiveCardPosition = (index: number, selectedIndex: number) => {
     const offset = index < selectedIndex ? -120 : 120;
-    const centerX = 288;
-    const centerY = 8;
+    const centerX = 0;
+    const centerY = 0;
     
     return {
       x: centerX + offset,
@@ -98,8 +97,7 @@ export const InteractiveDiagnosisDeck = ({
   };
 
   return (
-    <div className="relative w-full min-h-[500px] flex items-center justify-center">
-      <div className="relative w-full max-w-4xl h-[400px] flex items-center justify-center">
+    <div className="relative w-full h-[500px]">
         <AnimatePresence mode="wait">
           {painPoints.map((painPoint, index) => {
             const isSelected = selectedCard === painPoint.id;
@@ -108,8 +106,8 @@ export const InteractiveDiagnosisDeck = ({
 
             let position;
             if (isSelected) {
-              const centerX = 288;
-              const centerY = 8;
+              const centerX = 0;
+              const centerY = 0;
               position = { x: centerX, y: centerY, rotate: 0, scale: 1, zIndex: 20 };
             } else if (isAnySelected) {
               position = getInactiveCardPosition(index, selectedIndex);
@@ -120,7 +118,7 @@ export const InteractiveDiagnosisDeck = ({
             return (
               <motion.div
                 key={painPoint.id}
-                className="absolute w-80 h-96 cursor-pointer"
+                className="absolute w-80 h-96 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
                 initial={{
                   x: 0,
                   y: -100,
@@ -232,8 +230,6 @@ export const InteractiveDiagnosisDeck = ({
             );
           })}
         </AnimatePresence>
-      </div>
-
     </div>
   );
 };

@@ -199,6 +199,16 @@ export const InteractiveDiagnosisDeck = ({
         }}
       >
         <div className="relative pointer-events-auto w-full h-full">
+          {/* Container center marker */}
+          <div 
+            className="absolute w-2 h-2 bg-yellow-500 z-50"
+            style={{
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%, -50%)',
+              boxShadow: '0 0 0 2px black'
+            }}
+          />
         <AnimatePresence mode="wait">
           {painPoints.map((painPoint, index) => {
             const isSelected = selectedCard === painPoint.id;
@@ -217,12 +227,15 @@ export const InteractiveDiagnosisDeck = ({
             return (
               <motion.div
                 key={painPoint.id}
-                className="absolute w-80 h-96 cursor-pointer"
+                className="absolute cursor-pointer"
                 style={{
-                  left: '50%',
-                  top: '50%',
-                  transform: 'translate(-50%, -50%)',
-                  transformOrigin: 'center center'
+                  width: '320px',  // 80 * 4 = 320px
+                  height: '384px', // 96 * 4 = 384px
+                  left: 'calc(50% - 160px)',  // Half of width
+                  top: 'calc(50% - 192px)',   // Half of height
+                  // NO TRANSFORM - using calc instead
+                  border: '1px solid green',  // Debug border
+                  backgroundColor: 'rgba(0,255,0,0.1)' // Debug background
                 }}
                 initial={{
                   x: 0,

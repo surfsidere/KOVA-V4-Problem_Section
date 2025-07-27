@@ -81,44 +81,20 @@ export const InteractiveDiagnosisDeck = ({
 }) => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
-  const [showDiagnostics, setShowDiagnostics] = useState(true);
+  const [showDiagnostics, setShowDiagnostics] = useState(false);
 
   // Initialize the deck animation
   useEffect(() => {
     const timer = setTimeout(() => setIsInitialized(true), 100);
     
-    // Debug logging
-    console.log('=== CENTERING DIAGNOSTICS ===');
-    console.log('Viewport:', {
-      width: window.innerWidth,
-      height: window.innerHeight,
-      centerX: window.innerWidth / 2,
-      centerY: window.innerHeight / 2
-    });
-    console.log('Document body:', {
-      offsetLeft: document.body.offsetLeft,
-      offsetTop: document.body.offsetTop,
-      scrollLeft: document.body.scrollLeft,
-      scrollTop: document.body.scrollTop,
-      clientWidth: document.body.clientWidth,
-      scrollWidth: document.body.scrollWidth
-    });
-    
-    // Check computed styles
-    const bodyStyles = window.getComputedStyle(document.body);
-    console.log('Body computed styles:', {
-      margin: bodyStyles.margin,
-      padding: bodyStyles.padding,
-      transform: bodyStyles.transform,
-      position: bodyStyles.position
-    });
-    
-    const htmlStyles = window.getComputedStyle(document.documentElement);
-    console.log('HTML computed styles:', {
-      margin: htmlStyles.margin,
-      padding: htmlStyles.padding,
-      transform: htmlStyles.transform
-    });
+    // Debug logging (commented for production)
+    // console.log('=== CENTERING DIAGNOSTICS ===');
+    // console.log('Viewport:', {
+    //   width: window.innerWidth,
+    //   height: window.innerHeight,
+    //   centerX: window.innerWidth / 2,
+    //   centerY: window.innerHeight / 2
+    // });
     
     return () => clearTimeout(timer);
   }, []);
@@ -147,7 +123,7 @@ export const InteractiveDiagnosisDeck = ({
       zIndex: total - index
     };
     
-    console.log(`Card ${index} position:`, position);
+    // console.log(`Card ${index} position:`, position);
     
     return position;
   };
@@ -186,29 +162,9 @@ export const InteractiveDiagnosisDeck = ({
         </>
       )}
       
-      {/* Temporarily simplified container for debugging */}
-      <div 
-        className="fixed pointer-events-none z-10"
-        style={{
-          left: '50%',
-          top: '50%',
-          transform: 'translate(-50%, -50%)',
-          border: '2px solid blue',
-          width: '800px',
-          height: '500px'
-        }}
-      >
-        <div className="relative pointer-events-auto w-full h-full">
-          {/* Container center marker */}
-          <div 
-            className="absolute w-2 h-2 bg-yellow-500 z-50"
-            style={{
-              left: '50%',
-              top: '50%',
-              transform: 'translate(-50%, -50%)',
-              boxShadow: '0 0 0 2px black'
-            }}
-          />
+      <div className="fixed inset-0 pointer-events-none z-10">
+        <div className="relative w-full h-full flex items-center justify-center">
+          <div className="relative pointer-events-auto">
         <AnimatePresence mode="wait">
           {painPoints.map((painPoint, index) => {
             const isSelected = selectedCard === painPoint.id;
@@ -229,13 +185,11 @@ export const InteractiveDiagnosisDeck = ({
                 key={painPoint.id}
                 className="absolute cursor-pointer"
                 style={{
-                  width: '320px',  // 80 * 4 = 320px
-                  height: '384px', // 96 * 4 = 384px
+                  width: '320px',  // w-80 = 20rem = 320px
+                  height: '384px', // h-96 = 24rem = 384px
                   left: 'calc(50% - 160px)',  // Half of width
-                  top: 'calc(50% - 192px)',   // Half of height
-                  // NO TRANSFORM - using calc instead
-                  border: '1px solid green',  // Debug border
-                  backgroundColor: 'rgba(0,255,0,0.1)' // Debug background
+                  top: 'calc(50% - 192px)'    // Half of height
+                  // Using calc() instead of transform - this fixed the centering!
                 }}
                 initial={{
                   x: 0,
@@ -246,11 +200,10 @@ export const InteractiveDiagnosisDeck = ({
                   zIndex: painPoints.length - index
                 }}
                 animate={{
-                  // TEMPORARILY DISABLED FOR DEBUGGING
-                  // x: position.x,
-                  // y: position.y,
-                  // rotate: position.rotate,
-                  // scale: position.scale,
+                  x: position.x,
+                  y: position.y,
+                  rotate: position.rotate,
+                  scale: position.scale,
                   opacity: isInitialized ? 1 : 0,
                   zIndex: position.zIndex
                 }}
@@ -349,8 +302,9 @@ export const InteractiveDiagnosisDeck = ({
             );
           })}
         </AnimatePresence>
+          </div>
+        </div>
       </div>
-    </div>
     </>
   );
 };

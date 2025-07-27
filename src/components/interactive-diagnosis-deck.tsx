@@ -94,7 +94,7 @@ export const InteractiveDiagnosisDeck = ({
   };
 
   return (
-    <div className="relative w-full min-h-[500px] flex items-center justify-center p-8">
+    <div className="relative w-full min-h-[500px] flex items-center justify-center">
       <div className="relative w-full max-w-4xl h-[400px] flex items-center justify-center">
         <AnimatePresence mode="wait">
           {painPoints.map((painPoint, index) => {

@@ -45,20 +45,22 @@ export function FluidScrollHero({
       return;
     }
 
-    // Initial state - everything hidden
+    // DRAMATIC INITIAL STATE: Set stage for theatrical entrance
     gsap.set(titleEl, { 
       opacity: 0, 
-      y: 80,
-      scale: 0.9
+      y: 100,
+      scale: 0.8
     });
     
     gsap.set(cardsEl, { 
-      opacity: 0
+      opacity: 0,
+      y: 60,
+      scale: 0.9
     });
     
     gsap.set(subtitleEl, { 
       opacity: 0, 
-      y: 40 
+      y: 80 
     });
 
     // Create main timeline for fluid entrance
@@ -71,18 +73,22 @@ export function FluidScrollHero({
       }
     });
 
-    // Improved choreography: Title → Cards → Subtitle
+    // THEATRICAL CHOREOGRAPHY: Three-act performance
     entranceTl
+      // ACT 1: Title entrance with dramatic scale
       .to(titleEl, {
         opacity: 1,
         y: 0,
         scale: 1,
-        duration: 1,
+        duration: 1.5,
         ease: "power3.out"
       }, 0)
+      // ACT 2: Cards dramatic reveal with stagger
       .to(cardsEl, {
         opacity: 1,
-        duration: 1.2,
+        y: 0,
+        scale: 1,
+        duration: 1.8,
         ease: "power2.out",
         onComplete: () => {
           // Enable card interactions after entrance
@@ -90,13 +96,14 @@ export function FluidScrollHero({
             cardsEl.style.pointerEvents = 'auto';
           }
         }
-      }, 1.5)  // Cards appear after title is complete
+      }, 2.0)  // Cards appear with dramatic pause
+      // ACT 3: Subtitle elegant entrance
       .to(subtitleEl, {
         opacity: 1,
         y: 0,
-        duration: 1,
+        duration: 1.2,
         ease: "power2.out"
-      }, 2.5);  // Subtitle appears after cards settle
+      }, 3.5);  // Final subtitle completes the story
 
     // Sticky behavior - everything stays fixed during interaction
     ScrollTrigger.create({
@@ -169,38 +176,44 @@ export function FluidScrollHero({
       {/* Spacer for proper scroll distance */}
       <div className="h-[50vh]" />
       
-      {/* Sticky content section */}
+      {/* TWO-SCENE THEATER: Full viewport orchestration */}
       <div 
         ref={stickyRef}
-        className="relative min-h-screen flex flex-col items-center justify-center px-4"
+        className="relative min-h-screen flex flex-col px-6"
       >
-        {/* Title */}
-        <div className="text-center max-w-4xl mx-auto mb-8">
-          <h1 
-            ref={titleRef}
-            className="font-headline text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl opacity-0"
-          >
-            {title}
-          </h1>
+        {/* SCENE 1: Title - Top third of viewport */}
+        <div className="flex-1 flex items-end justify-center pb-8">
+          <div className="text-center max-w-5xl">
+            <h1 
+              ref={titleRef}
+              className="font-headline text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl opacity-0"
+            >
+              {title}
+            </h1>
+          </div>
         </div>
         
-        {/* Interactive Cards - Perfect Magic Prompt Version */}
-        <div 
-          ref={cardsRef}
-          className="text-center w-full mb-12"
-          style={{ pointerEvents: 'auto' }}
-        >
-          <InteractiveDiagnosisDeck />
+        {/* SCENE 2: Cards - Center stage with breathing room */}
+        <div className="flex-1 flex items-center justify-center py-16">
+          <div 
+            ref={cardsRef}
+            className="w-full"
+            style={{ pointerEvents: 'auto' }}
+          >
+            <InteractiveDiagnosisDeck />
+          </div>
         </div>
         
-        {/* Subtitle */}
-        <div className="text-center max-w-4xl mx-auto">
-          <p 
-            ref={subtitleRef}
-            className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed opacity-0"
-          >
-            {subtitle}
-          </p>
+        {/* SCENE 3: Subtitle - Bottom third of viewport */}
+        <div className="flex-1 flex items-start justify-center pt-8">
+          <div className="text-center max-w-4xl">
+            <p 
+              ref={subtitleRef}
+              className="text-muted-foreground text-xl leading-relaxed opacity-0"
+            >
+              {subtitle}
+            </p>
+          </div>
         </div>
       </div>
       

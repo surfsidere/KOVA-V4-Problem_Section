@@ -1,10 +1,48 @@
 "use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
 import { InteractiveDiagnosisDeck } from '@/components/interactive-diagnosis-deck';
+
+// Dynamic Light Text Component
+const DynamicLightText = ({ baseText, dynamicWords, interval = 3000 }: {
+  baseText: string;
+  dynamicWords: string[];
+  interval?: number;
+}) => {
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsVisible(false);
+      setTimeout(() => {
+        setCurrentWordIndex((prev) => (prev + 1) % dynamicWords.length);
+        setIsVisible(true);
+      }, 250); // Half of transition duration
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [dynamicWords.length, interval]);
+
+  return (
+    <>
+      {baseText}{' '}
+      <span 
+        className={`inline-block transition-all duration-500 ease-in-out ${
+          isVisible 
+            ? 'opacity-100 transform translate-y-0' 
+            : 'opacity-0 transform translate-y-5'
+        }`}
+        style={{ color: 'hsl(0 0% 3.9%)' }}
+      >
+        {dynamicWords[currentWordIndex]}
+      </span>
+    </>
+  );
+};
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -169,9 +207,9 @@ export function FluidScrollHero({
   }, []);
 
   return (
-    <div 
+    <section 
       ref={containerRef}
-      className={cn("relative", className)}
+      className={cn("relative bg-[#F5F5F5] z-10", className)}
     >
       {/* Spacer for proper scroll distance */}
       <div className="h-[50vh]" />
@@ -186,9 +224,13 @@ export function FluidScrollHero({
           <div className="text-center max-w-5xl">
             <h1 
               ref={titleRef}
-              className="font-headline text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl xl:text-7xl opacity-0"
+              className="kova-light-primary text-4xl tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl opacity-0"
             >
-              {title}
+              <DynamicLightText 
+                baseText="Las asistencias tradicionales se han quedado"
+                dynamicWords={["atrás.", "obsoletas.", "limitadas.", "superadas."]}
+                interval={3000}
+              />
             </h1>
           </div>
         </div>
@@ -209,7 +251,7 @@ export function FluidScrollHero({
           <div className="text-center max-w-4xl">
             <p 
               ref={subtitleRef}
-              className="text-muted-foreground text-xl leading-relaxed opacity-0"
+              className="kova-light-secondary text-xl opacity-0"
             >
               {subtitle}
             </p>

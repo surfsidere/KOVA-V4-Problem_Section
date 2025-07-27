@@ -49,31 +49,31 @@ export const InteractiveDiagnosisDeck = ({
       id: 1,
       title: "Experiencia Genérica",
       description: "Los usuarios reciben beneficios estándar que no se adaptan a sus necesidades individuales, reduciendo su satisfacción y engagement.",
-      icon: <Frown className="w-6 h-6 text-red-500" />
+      icon: <Frown className="w-6 h-6" style={{ color: '#FFF9E1' }} />
     },
     {
       id: 2,
       title: "Soporte Lento",
       description: "Los procesos de atención al cliente son lentos e ineficientes, generando frustración y pérdida de tiempo valioso.",
-      icon: <Clock className="w-6 h-6 text-red-500" />
+      icon: <Clock className="w-6 h-6" style={{ color: '#FFF9E1' }} />
     },
     {
       id: 3,
       title: "Procesos Confusos",
       description: "La navegación y gestión de beneficios es compleja y poco intuitiva, dificultando el acceso a los servicios.",
-      icon: <Shuffle className="w-6 h-6 text-red-500" />
+      icon: <Shuffle className="w-6 h-6" style={{ color: '#FFF9E1' }} />
     },
     {
       id: 4,
       title: "Falta de Transparencia",
       description: "Los usuarios no tienen visibilidad clara de sus beneficios disponibles ni del estado de sus solicitudes.",
-      icon: <Search className="w-6 h-6 text-red-500" />
+      icon: <Search className="w-6 h-6" style={{ color: '#FFF9E1' }} />
     },
     {
       id: 5,
       title: "Costos Elevados",
       description: "Los gastos administrativos y operativos son altos debido a procesos manuales y sistemas desactualizados.",
-      icon: <TrendingDown className="w-6 h-6 text-red-500" />
+      icon: <TrendingDown className="w-6 h-6" style={{ color: '#FFF9E1' }} />
     }
   ]
 }: {
@@ -222,18 +222,20 @@ export const InteractiveDiagnosisDeck = ({
                 onClick={() => handleCardClick(painPoint.id)}
               >
                 <div className={cn(
-                  "w-full h-full bg-card border border-border rounded-xl shadow-lg overflow-visible",
+                  "w-full h-full bg-white border border-gray-100 rounded-xl shadow-lg overflow-visible",
                   "transition-shadow duration-300",
                   isSelected ? "shadow-2xl" : "shadow-lg hover:shadow-xl"
                 )}>
                   {/* Card Header */}
-                  <div className="p-6 border-b border-border bg-muted/30">
+                  <div className="p-6 border-b border-gray-200 kova-light-gradient">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-red-100 text-red-600">
-                          {painPoint.icon}
+                        <div className="p-2 rounded-lg kova-icon-gradient drop-shadow-[0_0_2px_rgba(255,249,225,0.5)] hover:drop-shadow-[0_0_6px_rgba(255,249,225,0.7)] transition-all duration-300">
+                          <div style={{ color: 'hsl(0 0% 3.9%)' }}>
+                            {painPoint.icon}
+                          </div>
                         </div>
-                        <h3 className="text-lg font-semibold text-foreground">
+                        <h3 className="text-lg font-semibold" style={{ color: 'hsl(0 0% 3.9%)' }}>
                           {painPoint.title}
                         </h3>
                       </div>
@@ -246,9 +248,9 @@ export const InteractiveDiagnosisDeck = ({
                             e.stopPropagation();
                             setSelectedCard(null);
                           }}
-                          className="p-2 rounded-full hover:bg-muted transition-colors"
+                          className="p-2 rounded-full hover:bg-gray-100 transition-colors"
                         >
-                          <X className="w-4 h-4 text-muted-foreground" />
+                          <X className="w-4 h-4" style={{ color: 'hsl(0 0% 3.9%)' }} />
                         </motion.button>
                       )}
                     </div>
@@ -269,11 +271,11 @@ export const InteractiveDiagnosisDeck = ({
                           exit={{ opacity: 0, y: 20 }}
                           transition={{ delay: 0.1 }}
                         >
-                          <p className="text-muted-foreground leading-relaxed">
+                          <p className="leading-relaxed" style={{ color: 'hsl(0 0% 3.9%)' }}>
                             {painPoint.description}
                           </p>
-                          <div className="mt-4 pt-4 border-t border-border">
-                            <span className="text-sm text-muted-foreground">
+                          <div className="mt-4 pt-4 border-t border-gray-200">
+                            <span className="text-sm" style={{ color: '#4A4A4A' }}>
                               Haz clic para cerrar
                             </span>
                           </div>
@@ -283,8 +285,8 @@ export const InteractiveDiagnosisDeck = ({
 
                     {!isSelected && (
                       <div className="space-y-2">
-                        <div className="h-3 bg-muted rounded w-3/4"></div>
-                        <div className="h-3 bg-muted rounded w-1/2"></div>
+                        <div className="h-3 bg-gray-200 rounded w-3/4"></div>
+                        <div className="h-3 bg-gray-200 rounded w-1/2"></div>
                       </div>
                     )}
                   </div>
@@ -292,7 +294,7 @@ export const InteractiveDiagnosisDeck = ({
                   {/* Card Footer - only visible when not selected */}
                   {!isSelected && (
                     <div className="absolute bottom-4 left-6 right-6">
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-xs" style={{ color: '#4A4A4A' }}>
                         Haz clic para ver más
                       </div>
                     </div>

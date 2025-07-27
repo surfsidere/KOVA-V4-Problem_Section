@@ -97,7 +97,7 @@ export const InteractiveDiagnosisDeck = ({
   };
 
   return (
-    <div className="relative w-full h-[500px]">
+    <div className="grid place-items-center w-full h-[500px]">
         <AnimatePresence mode="wait">
           {painPoints.map((painPoint, index) => {
             const isSelected = selectedCard === painPoint.id;
@@ -118,7 +118,12 @@ export const InteractiveDiagnosisDeck = ({
             return (
               <motion.div
                 key={painPoint.id}
-                className="absolute w-80 h-96 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
+                className="absolute w-80 h-96 cursor-pointer"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)'
+                }}
                 initial={{
                   x: 0,
                   y: -100,

@@ -261,6 +261,6 @@ export function FluidScrollHero({
       
       {/* Spacer for vacuum effect */}
       <div className="h-[10vh]" />
-    </div>
+    </section>
   );
 }

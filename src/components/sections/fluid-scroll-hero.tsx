@@ -53,8 +53,7 @@ export function FluidScrollHero({
     });
     
     gsap.set(cardsEl, { 
-      opacity: 0,
-      y: 60
+      opacity: 0
     });
     
     gsap.set(subtitleEl, { 
@@ -83,7 +82,6 @@ export function FluidScrollHero({
       }, 0)
       .to(cardsEl, {
         opacity: 1,
-        y: 0,
         duration: 1.2,
         ease: "power2.out",
         onComplete: () => {
@@ -109,10 +107,13 @@ export function FluidScrollHero({
       pinSpacing: true,
       onEnter: () => {
         // Ensure everything is fully visible and interactive
-        gsap.set([titleEl, cardsEl, subtitleEl], {
+        gsap.set([titleEl, subtitleEl], {
           opacity: 1,
           y: 0,
           scale: 1
+        });
+        gsap.set(cardsEl, {
+          opacity: 1
         });
         if (cardsEl) {
           cardsEl.style.pointerEvents = 'auto';
@@ -134,12 +135,17 @@ export function FluidScrollHero({
           cardsEl.style.pointerEvents = 'none';
         }
         
-        // Professional vacuum effect
-        gsap.to([titleEl, cardsEl, subtitleEl], {
+        // Professional vacuum effect  
+        gsap.to([titleEl, subtitleEl], {
           opacity: Math.max(0, 1 - progress * 1.8),
           y: -progress * 200,
           scale: Math.max(0.2, 1 - progress * 0.8),
           rotation: progress * 10,
+          duration: 0.1,
+          ease: "power2.in"
+        });
+        gsap.to(cardsEl, {
+          opacity: Math.max(0, 1 - progress * 1.8),
           duration: 0.1,
           ease: "power2.in"
         });

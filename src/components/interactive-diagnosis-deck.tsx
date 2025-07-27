@@ -97,7 +97,19 @@ export const InteractiveDiagnosisDeck = ({
   };
 
   return (
-    <div className="grid place-items-center w-full h-[500px]">
+    <div 
+      className="fixed inset-0 pointer-events-none z-10"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        left: '0',
+        top: '0',
+        width: '100vw',
+        height: '100vh'
+      }}
+    >
+      <div className="relative pointer-events-auto">
         <AnimatePresence mode="wait">
           {painPoints.map((painPoint, index) => {
             const isSelected = selectedCard === painPoint.id;
@@ -106,9 +118,7 @@ export const InteractiveDiagnosisDeck = ({
 
             let position;
             if (isSelected) {
-              const centerX = 0;
-              const centerY = 0;
-              position = { x: centerX, y: centerY, rotate: 0, scale: 1, zIndex: 20 };
+              position = { x: 0, y: 0, rotate: 0, scale: 1, zIndex: 20 };
             } else if (isAnySelected) {
               position = getInactiveCardPosition(index, selectedIndex);
             } else {
@@ -122,7 +132,8 @@ export const InteractiveDiagnosisDeck = ({
                 style={{
                   left: '50%',
                   top: '50%',
-                  transform: 'translate(-50%, -50%)'
+                  transform: 'translate(-50%, -50%)',
+                  transformOrigin: 'center center'
                 }}
                 initial={{
                   x: 0,
@@ -235,6 +246,7 @@ export const InteractiveDiagnosisDeck = ({
             );
           })}
         </AnimatePresence>
+      </div>
     </div>
   );
 };

@@ -6,6 +6,44 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
 import { Globe, Smartphone, Code, Building2, Users, ChevronRight } from 'lucide-react';
 
+// Dynamic Light Text Component
+const DynamicLightText = ({ baseText, dynamicWords, interval = 3000 }: {
+  baseText: string;
+  dynamicWords: string[];
+  interval?: number;
+}) => {
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsVisible(false);
+      setTimeout(() => {
+        setCurrentWordIndex((prev) => (prev + 1) % dynamicWords.length);
+        setIsVisible(true);
+      }, 250); // Half of transition duration
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [dynamicWords.length, interval]);
+
+  return (
+    <>
+      {baseText}{' '}
+      <span 
+        className={`inline-block transition-all duration-500 ease-in-out ${
+          isVisible 
+            ? 'opacity-100 transform translate-y-0' 
+            : 'opacity-0 transform translate-y-5'
+        }`}
+        style={{ color: 'hsl(0 0% 3.9%)' }}
+      >
+        {dynamicWords[currentWordIndex]}
+      </span>
+    </>
+  );
+};
+
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -136,22 +174,26 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
   return (
     <section 
       ref={sectionRef}
-      className={cn("relative min-h-screen flex flex-col items-center justify-center px-4 py-16 bg-gradient-to-b from-background via-muted/10 to-background", className)}
+      className={cn("relative min-h-screen flex flex-col items-center justify-center px-4 py-16 bg-[#F5F5F5] z-10", className)}
     >
       {/* Solution Title */}
       <div className="text-center max-w-4xl mx-auto mb-8">
         <h2 
           ref={titleRef}
-          className="font-headline text-5xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent opacity-0"
+          className="kova-light-primary text-5xl tracking-tight sm:text-6xl lg:text-7xl mb-6 opacity-0"
         >
           Somos La Solución
         </h2>
         
         <p 
           ref={subtitleRef}
-          className="text-muted-foreground max-w-3xl mx-auto text-2xl font-medium opacity-0"
+          className="kova-light-secondary max-w-3xl mx-auto text-2xl opacity-0"
         >
-          Mas Conexión, Mas Uso, Mas Valor
+          <DynamicLightText 
+            baseText="Mas Conexión, Mas Uso, Mas"
+            dynamicWords={["Valor", "Impacto", "Resultados", "Beneficios"]}
+            interval={3500}
+          />
         </p>
       </div>
 
@@ -160,12 +202,12 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
         ref={methodsRef}
         className="max-w-6xl mx-auto mb-12 opacity-0"
       >
-        <div className="bg-card/60 backdrop-blur-md border border-border/50 rounded-2xl p-6 lg:p-8 shadow-2xl">
+        <div className="bg-white border border-gray-100 rounded-2xl p-6 lg:p-8 shadow-lg">
           <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-foreground mb-4">
+            <h3 className="kova-light-primary text-2xl mb-4">
               Conéctate de la manera que prefieras
             </h3>
-            <p className="text-muted-foreground text-lg">
+            <p className="kova-light-secondary text-lg">
               Múltiples opciones de integración para adaptarse a tu ecosistema tecnológico
             </p>
           </div>
@@ -177,14 +219,14 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
                 className="text-center group hover:scale-105 transition-transform duration-300"
               >
                 <div className="flex justify-center mb-4">
-                  <div className="p-4 rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-300">
+                  <div className="p-4 rounded-full kova-icon-gradient-dark transition-colors duration-300">
                     {method.icon}
                   </div>
                 </div>
-                <h4 className="text-xl font-semibold text-foreground mb-2">
+                <h4 className="kova-light-primary text-xl mb-2">
                   {method.title}
                 </h4>
-                <p className="text-muted-foreground text-sm">
+                <p className="kova-light-secondary text-sm">
                   {method.description}
                 </p>
               </div>
@@ -198,7 +240,7 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
         ref={toggleRef}
         className="text-center max-w-4xl mx-auto opacity-0"
       >
-        <h3 className="text-2xl font-bold text-foreground mb-6">
+        <h3 className="kova-light-primary text-2xl mb-6">
           ¿Cuál es tu enfoque?
         </h3>
         
@@ -207,11 +249,11 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
             onClick={() => handlePathSelection('instituciones')}
             className={cn(
               "group relative px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300",
-              "border-2 border-primary/20 hover:border-primary/50",
-              "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2",
+              "border-2 border-gray-200 hover:border-gray-300",
+              "focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2",
               selectedPath === 'instituciones' 
-                ? "bg-primary text-primary-foreground shadow-lg scale-105" 
-                : "bg-card text-foreground hover:bg-primary/5"
+                ? "bg-white kova-light-primary shadow-lg scale-105 border-gray-400" 
+                : "bg-white kova-light-primary hover:bg-gray-50"
             )}
           >
             <span className="flex items-center gap-2">
@@ -221,17 +263,17 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
             </span>
           </button>
 
-          <div className="text-muted-foreground font-medium">o</div>
+          <div className="kova-light-secondary font-medium">o</div>
 
           <button
             onClick={() => handlePathSelection('aliados')}
             className={cn(
               "group relative px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300",
-              "border-2 border-primary/20 hover:border-primary/50",
-              "focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2",
+              "border-2 border-gray-200 hover:border-gray-300",
+              "focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2",
               selectedPath === 'aliados' 
-                ? "bg-primary text-primary-foreground shadow-lg scale-105" 
-                : "bg-card text-foreground hover:bg-primary/5"
+                ? "bg-white kova-light-primary shadow-lg scale-105 border-gray-400" 
+                : "bg-white kova-light-primary hover:bg-gray-50"
             )}
           >
             <span className="flex items-center gap-2">
@@ -243,14 +285,14 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
         </div>
 
         {selectedPath && (
-          <div className="mt-8 p-6 bg-muted/30 rounded-xl border">
-            <p className="text-muted-foreground text-lg">
+          <div className="mt-8 p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
+            <p className="kova-light-secondary text-lg">
               {selectedPath === 'instituciones' 
                 ? "Perfecto para instituciones financieras que buscan modernizar sus beneficios corporativos con tecnología avanzada."
                 : "Ideal para consultores y partners que quieren ofrecer soluciones de beneficios premium a sus clientes."
               }
             </p>
-            <button className="mt-4 px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors">
+            <button className="mt-4 px-6 py-2 bg-white border border-gray-300 kova-light-primary rounded-lg hover:bg-gray-50 transition-colors">
               Continuar como {selectedPath === 'instituciones' ? 'Institución' : 'Aliado'}
             </button>
           </div>

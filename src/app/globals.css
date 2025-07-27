@@ -121,6 +121,11 @@
   .kova-icon-gradient {
     background: linear-gradient(to bottom right, rgba(0,0,0,0.05) 0%, rgba(255,249,225,0.5) 50%, rgba(0,0,0,0.05) 100%);
   }
+
+  /* Enhanced dark icon gradient for better distinction */
+  .kova-icon-gradient-dark {
+    background: linear-gradient(to bottom right, #2A2A2A 0%, rgba(255,249,225,0.2) 50%, #2A2A2A 100%);
+  }
   
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {

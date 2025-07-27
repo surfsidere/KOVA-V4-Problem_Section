@@ -95,7 +95,7 @@ export const InteractiveDiagnosisDeck = ({
 
   return (
     <div className="relative w-full min-h-[500px] flex items-center justify-center p-8">
-      <div className="relative w-full max-w-xl h-[400px]">
+      <div className="relative w-full max-w-4xl h-[400px] flex items-center justify-center">
         <AnimatePresence mode="wait">
           {painPoints.map((painPoint, index) => {
             const isSelected = selectedCard === painPoint.id;
@@ -235,7 +235,7 @@ export const InteractiveDiagnosisDeck = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-background/80 backdrop-blur-sm z-40"
+            className="absolute inset-0 bg-black/20 backdrop-blur-sm z-40"
             onClick={() => setSelectedCard(null)}
           />
         )}

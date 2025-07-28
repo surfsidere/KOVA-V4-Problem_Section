@@ -5,7 +5,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
 import { Globe, Smartphone, Code } from 'lucide-react';
-import { KovaLiquidToggle, KovaGooeyFilter } from '@/components/ui/kova-liquid-toggle';
+import { KovaLiquidToggle } from '@/components/ui/kova-liquid-toggle';
 
 // Dynamic Light Text Component
 const DynamicLightText = ({ baseText, dynamicWords, interval = 3000 }: {
@@ -178,7 +178,6 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
       ref={sectionRef}
       className={cn("relative min-h-screen flex flex-col items-center justify-center px-4 py-16 bg-[#F5F5F5] z-10", className)}
     >
-      <KovaGooeyFilter />
       {/* Solution Title */}
       <div className="text-center max-w-4xl mx-auto mb-8">
         <h2 

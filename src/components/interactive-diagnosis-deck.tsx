@@ -132,13 +132,11 @@ export const InteractiveDiagnosisDeck = ({
                 key={painPoint.id}
                 className="absolute cursor-pointer"
                 style={{
-                  // Responsive card dimensions
-                  width: 'clamp(280px, 85vw, 320px)',
-                  height: 'clamp(320px, 45vh, 384px)',
-                  left: '50%',
-                  top: '50%',
-                  transform: `translate(-50%, -50%) translateX(${position.x}px) translateY(${position.y}px) rotate(${position.rotate}deg) scale(${position.scale})`,
-                  zIndex: position.zIndex
+                  // Mobile-only responsive dimensions, desktop/tablet fixed
+                  width: typeof window !== 'undefined' && window.innerWidth < 768 ? 'clamp(280px, 85vw, 320px)' : '320px',
+                  height: typeof window !== 'undefined' && window.innerWidth < 768 ? 'clamp(320px, 45vh, 384px)' : '384px',
+                  left: 'calc(50% - 160px)',  // Half of 320px width
+                  top: 'calc(50% - 192px)'    // Half of 384px height
                 }}
                 initial={{
                   x: 0,
@@ -149,10 +147,10 @@ export const InteractiveDiagnosisDeck = ({
                   zIndex: painPoints.length - index
                 }}
                 animate={{
-                  x: 0, // Position handled by CSS transform
-                  y: 0, // Position handled by CSS transform
-                  rotate: 0, // Rotation handled by CSS transform
-                  scale: 1, // Scale handled by CSS transform
+                  x: position.x,
+                  y: position.y,
+                  rotate: position.rotate,
+                  scale: position.scale,
                   opacity: isInitialized ? 1 : 0,
                   zIndex: position.zIndex
                 }}

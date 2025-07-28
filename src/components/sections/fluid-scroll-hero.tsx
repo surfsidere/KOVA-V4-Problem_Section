@@ -219,8 +219,8 @@ export function FluidScrollHero({
         ref={stickyRef}
         className="relative min-h-screen flex flex-col px-4 sm:px-6 lg:px-8"
       >
-        {/* SCENE 1: Title - Enhanced spacing with 25% allocation */}
-        <div className="flex-[0.25] flex items-end justify-center pb-12 sm:pb-16 lg:pb-20">
+        {/* SCENE 1: Title - Symmetric spacing restored */}
+        <div className="flex-1 flex items-end justify-center pb-12 sm:pb-16 lg:pb-20">
           <div className="text-center max-w-5xl px-4">
             <h1 
               ref={titleRef}
@@ -235,8 +235,8 @@ export function FluidScrollHero({
           </div>
         </div>
         
-        {/* SCENE 2: Cards - Expanded breathing room with 50% allocation */}
-        <div className="flex-[0.5] flex items-center justify-center py-16 sm:py-20 lg:py-24">
+        {/* SCENE 2: Cards - Center stage with symmetric distribution */}
+        <div className="flex-1 flex items-center justify-center py-16 sm:py-20 lg:py-24">
           <div 
             ref={cardsRef}
             className="w-full px-4"
@@ -246,8 +246,8 @@ export function FluidScrollHero({
           </div>
         </div>
         
-        {/* SCENE 3: Subtitle - Balanced spacing with 25% allocation */}
-        <div className="flex-[0.25] flex items-start justify-center pt-12 sm:pt-16 lg:pt-20">
+        {/* SCENE 3: Subtitle - Symmetric spacing restored */}
+        <div className="flex-1 flex items-start justify-center pt-12 sm:pt-16 lg:pt-20">
           <div className="text-center max-w-4xl px-4">
             <p 
               ref={subtitleRef}

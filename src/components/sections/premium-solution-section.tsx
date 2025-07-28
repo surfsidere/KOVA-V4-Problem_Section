@@ -203,7 +203,7 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
         className="max-w-6xl mx-auto mb-12 opacity-0"
       >
         <div className="bg-white border border-gray-100 rounded-2xl p-6 lg:p-8 shadow-lg">
-          <div className="text-center mb-8 kova-card-header-gradient rounded-t-xl -m-6 lg:-m-8 mb-2 p-6 lg:p-8">
+          <div className="text-center mb-8 kova-card-header-gradient rounded-t-xl -m-6 lg:-m-8 mb-2 p-6 lg:p-8 kova-glow-base">
             <h3 className="kova-light-primary text-2xl mb-4">
               Conéctate de la manera que prefieras
             </h3>
@@ -219,7 +219,7 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
                 className="text-center group hover:scale-105 transition-transform duration-300"
               >
                 <div className="flex justify-center mb-4">
-                  <div className="p-4 rounded-full kova-icon-gradient-dark transition-all duration-300 drop-shadow-[0_0_2px_rgba(255,249,225,0.5)] group-hover:drop-shadow-[0_0_6px_rgba(255,249,225,0.7)]">
+                  <div className="p-4 rounded-full kova-icon-gradient-dark transition-all duration-300 kova-glow-base group-hover:kova-glow-hover">
                     <div className="text-[#FFF9E1]">
                       {method.icon}
                     </div>
@@ -254,8 +254,8 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
               "kova-selector-gradient text-[#FFF9E1] hover:shadow-lg",
               "focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2",
               selectedPath === 'instituciones' 
-                ? "shadow-lg scale-105 drop-shadow-[0_0_4px_rgba(255,249,225,0.4)]" 
-                : "hover:drop-shadow-[0_0_2px_rgba(255,249,225,0.3)]"
+                ? "shadow-lg scale-105 kova-glow-active" 
+                : "kova-glow-base hover:kova-glow-hover"
             )}
           >
             <span className="flex items-center gap-2">
@@ -274,8 +274,8 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
               "kova-selector-gradient text-[#FFF9E1] hover:shadow-lg",
               "focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2",
               selectedPath === 'aliados' 
-                ? "shadow-lg scale-105 drop-shadow-[0_0_4px_rgba(255,249,225,0.4)]" 
-                : "hover:drop-shadow-[0_0_2px_rgba(255,249,225,0.3)]"
+                ? "shadow-lg scale-105 kova-glow-active" 
+                : "kova-glow-base hover:kova-glow-hover"
             )}
           >
             <span className="flex items-center gap-2">

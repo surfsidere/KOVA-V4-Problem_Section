@@ -227,11 +227,11 @@ export const InteractiveDiagnosisDeck = ({
                   isSelected ? "shadow-2xl" : "shadow-lg hover:shadow-xl"
                 )}>
                   {/* Card Header */}
-                  <div className="p-6 border-b border-gray-200 kova-light-gradient">
+                  <div className="p-6 border-b border-gray-200 kova-card-header-gradient kova-glow-base">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg kova-icon-gradient drop-shadow-[0_0_2px_rgba(255,249,225,0.5)] hover:drop-shadow-[0_0_6px_rgba(255,249,225,0.7)] transition-all duration-300">
-                          <div style={{ color: 'hsl(0 0% 3.9%)' }}>
+                        <div className="p-2 rounded-lg kova-icon-gradient-dark kova-glow-base hover:kova-glow-hover transition-all duration-300">
+                          <div className="text-[#FFF9E1]">
                             {painPoint.icon}
                           </div>
                         </div>

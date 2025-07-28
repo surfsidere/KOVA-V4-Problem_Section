@@ -122,19 +122,32 @@
     background: linear-gradient(to bottom right, rgba(0,0,0,0.05) 0%, rgba(255,249,225,0.5) 50%, rgba(0,0,0,0.05) 100%);
   }
 
-  /* Enhanced dark icon gradient for better distinction */
+  /* KOVA Dark Gradient System - Premium Blue-Grey Aesthetic */
   .kova-icon-gradient-dark {
-    background: linear-gradient(to bottom right, rgba(2,8,18,0.7) 0%, rgba(255,249,225,0.25) 50%, rgba(2,8,18,0.7) 100%);
+    background: linear-gradient(135deg, #0d1b2a 0%, #415a77 50%, #0d1b2a 100%);
   }
 
-  /* Card header gradient with lower opacity */
+  /* Card header gradient with subtle opacity for premium distinction */
   .kova-card-header-gradient {
-    background: linear-gradient(to right, rgba(2,8,18,0.1) 0%, rgba(255,249,225,0.02) 50%, rgba(2,8,18,0.1) 100%);
+    background: linear-gradient(135deg, rgba(13,27,42,0.3) 0%, rgba(65,90,119,0.3) 50%, rgba(13,27,42,0.3) 100%);
   }
 
-  /* Instituciones/Aliados selector gradient */
+  /* Instituciones/Aliados selector gradient - full opacity for prominence */
   .kova-selector-gradient {
-    background: linear-gradient(to right, rgba(2,8,18,0.7) 0%, rgba(255,249,225,0.25) 50%, rgba(2,8,18,0.7) 100%);
+    background: linear-gradient(135deg, #0d1b2a 0%, #415a77 50%, #0d1b2a 100%);
+  }
+
+  /* Enhanced Pale Gold Glow System */
+  .kova-glow-base {
+    filter: drop-shadow(0 0 4px rgba(255,249,225,0.6));
+  }
+
+  .kova-glow-hover {
+    filter: drop-shadow(0 0 12px rgba(255,249,225,0.8));
+  }
+
+  .kova-glow-active {
+    filter: drop-shadow(0 0 8px rgba(255,249,225,0.9));
   }
   
   /* Reduced motion support */

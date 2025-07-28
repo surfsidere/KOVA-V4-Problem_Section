@@ -226,7 +226,7 @@ export function KovaLiquidToggle({
           tabIndex={0}
           className={cn(
             "absolute left-0 top-0 w-[200px] h-full flex items-center justify-center gap-2 z-20 transition-all duration-200",
-            "hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-opacity-50 focus:ring-offset-2 focus:ring-offset-[#020010] rounded-full",
+            "hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-opacity-50 rounded-full",
             "transform-gpu will-change-transform",
             getOptionStyles('instituciones').text.className,
             hoveredOption === 'instituciones' && "scale-105",
@@ -256,7 +256,7 @@ export function KovaLiquidToggle({
           tabIndex={0}
           className={cn(
             "absolute right-0 top-0 w-[200px] h-full flex items-center justify-center gap-2 z-20 transition-all duration-200",
-            "hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-opacity-50 focus:ring-offset-2 focus:ring-offset-[#020010] rounded-full",
+            "hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-opacity-50 rounded-full",
             "transform-gpu will-change-transform",
             getOptionStyles('aliados').text.className,
             hoveredOption === 'aliados' && "scale-105",

@@ -111,22 +111,22 @@ export const InteractiveDiagnosisDeck = ({
       <div className="relative w-full pointer-events-none">
         <div className="relative w-full flex items-center justify-center" style={{ minHeight: 'clamp(300px, 40vh, 500px)' }}>
           <div className="relative pointer-events-auto">
-        <AnimatePresence mode="wait">
-          {painPoints.map((painPoint, index) => {
-            const isSelected = selectedCard === painPoint.id;
-            const isAnySelected = selectedCard !== null;
-            const selectedIndex = painPoints.findIndex(p => p.id === selectedCard);
+            <AnimatePresence mode="wait">
+              {painPoints.map((painPoint, index) => {
+                const isSelected = selectedCard === painPoint.id;
+                const isAnySelected = selectedCard !== null;
+                const selectedIndex = painPoints.findIndex(p => p.id === selectedCard);
 
-            let position;
-            if (isSelected) {
-              position = { x: 0, y: 0, rotate: 0, scale: 1, zIndex: 20 };
-            } else if (isAnySelected) {
-              position = getInactiveCardPosition(index, selectedIndex);
-            } else {
-              position = getCardPosition(index, painPoints.length);
-            }
+                let position;
+                if (isSelected) {
+                  position = { x: 0, y: 0, rotate: 0, scale: 1, zIndex: 20 };
+                } else if (isAnySelected) {
+                  position = getInactiveCardPosition(index, selectedIndex);
+                } else {
+                  position = getCardPosition(index, painPoints.length);
+                }
 
-            return (
+                return (
               <motion.div
                 key={painPoint.id}
                 className="absolute cursor-pointer"
@@ -247,10 +247,9 @@ export const InteractiveDiagnosisDeck = ({
                   )}
                 </div>
               </motion.div>
-            );
-          })}
-        </AnimatePresence>
-          </div>
+                );
+              })}
+            </AnimatePresence>
           </div>
         </div>
       </div>

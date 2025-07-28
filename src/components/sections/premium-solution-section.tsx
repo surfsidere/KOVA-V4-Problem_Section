@@ -176,13 +176,13 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
   return (
     <section 
       ref={sectionRef}
-      className={cn("relative min-h-screen flex flex-col items-center justify-center px-4 py-16 bg-[#F5F5F5] z-10", className)}
+      className={cn("relative min-h-screen flex flex-col items-center justify-center px-4 py-11 bg-[#F5F5F5] z-10", className)}
     >
       {/* Solution Title */}
-      <div className="text-center max-w-4xl mx-auto mb-8">
+      <div className="text-center max-w-4xl mx-auto mb-6">
         <h2 
           ref={titleRef}
-          className="kova-light-primary text-5xl tracking-tight sm:text-6xl lg:text-7xl mb-6 opacity-0"
+          className="kova-light-primary text-5xl tracking-tight sm:text-6xl lg:text-7xl mb-4 opacity-0"
         >
           Somos La Solución
         </h2>
@@ -202,11 +202,11 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
       {/* Connection Methods */}
       <div 
         ref={methodsRef}
-        className="max-w-6xl mx-auto mb-12 opacity-0"
+        className="max-w-6xl mx-auto mb-8 opacity-0"
       >
         <div className="bg-white border border-gray-100 rounded-2xl p-6 lg:p-8 shadow-lg">
-          <div className="text-center mb-8 kova-card-header-gradient rounded-t-xl -m-6 lg:-m-8 mb-2 p-6 lg:p-8 kova-glow-base">
-            <h3 className="kova-light-primary text-2xl mb-4">
+          <div className="text-center mb-6 kova-card-header-gradient rounded-t-xl -m-6 lg:-m-8 mb-2 p-6 lg:p-8 kova-glow-base">
+            <h3 className="kova-light-primary text-2xl mb-3">
               Conéctate de la manera que prefieras
             </h3>
             <p className="kova-light-secondary text-lg">
@@ -214,13 +214,13 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {connectionMethods.map((method) => (
               <div
                 key={method.id}
                 className="text-center group hover:scale-105 transition-transform duration-300"
               >
-                <div className="flex justify-center mb-4">
+                <div className="flex justify-center mb-3">
                   <div className="p-4 rounded-full kova-icon-gradient-dark transition-all duration-300 kova-glow-base group-hover:kova-glow-hover">
                     <div className="text-[#FFF9E1]">
                       {method.icon}
@@ -244,7 +244,7 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
         ref={toggleRef}
         className="text-center max-w-4xl mx-auto opacity-0"
       >
-        <h3 className="kova-light-primary text-2xl mb-8">
+        <h3 className="kova-light-primary text-2xl mb-6">
           ¿Cuál es tu enfoque?
         </h3>
         
@@ -255,14 +255,14 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
         />
 
         {selectedPath && (
-          <div className="mt-8 p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
+          <div className="mt-6 p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
             <p className="kova-light-secondary text-lg">
               {selectedPath === 'instituciones' 
                 ? "Perfecto para instituciones financieras que buscan modernizar sus beneficios corporativos con tecnología avanzada."
                 : "Ideal para consultores y partners que quieren ofrecer soluciones de beneficios premium a sus clientes."
               }
             </p>
-            <button className="mt-4 px-6 py-2 bg-white border border-gray-300 kova-light-primary rounded-lg hover:bg-gray-50 transition-colors">
+            <button className="mt-3 px-6 py-2 bg-white border border-gray-300 kova-light-primary rounded-lg hover:bg-gray-50 transition-colors">
               Continuar como {selectedPath === 'instituciones' ? 'Institución' : 'Aliado'}
             </button>
           </div>

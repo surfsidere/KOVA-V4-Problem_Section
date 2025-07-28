@@ -6,6 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
 import { Globe, Smartphone, Code } from 'lucide-react';
 import { KovaLiquidToggle } from '@/components/ui/kova-liquid-toggle';
+import { ToggleContentSection } from '@/components/ui/toggle-content-section';
 import { DynamicLightText } from '@/components/shared/dynamic-light-text';
 import { KOVA_DESIGN } from '@/lib/design-system';
 
@@ -219,19 +220,13 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
           className="mx-auto"
         />
 
-        {selectedPath && (
-          <div className="mt-6 p-6 bg-white rounded-xl border border-gray-200 shadow-sm">
-            <p className="kova-light-secondary text-lg">
-              {selectedPath === 'instituciones' 
-                ? "Perfecto para instituciones financieras que buscan modernizar sus beneficios corporativos con tecnología avanzada."
-                : "Ideal para consultores y partners que quieren ofrecer soluciones de beneficios premium a sus clientes."
-              }
-            </p>
-            <button className="mt-3 px-6 py-2 bg-white border border-gray-300 kova-light-primary rounded-lg hover:bg-gray-50 transition-colors">
-              Continuar como {selectedPath === 'instituciones' ? 'Institución' : 'Aliado'}
-            </button>
-          </div>
-        )}
+        {/* Dynamic Content Section */}
+        <div className="mt-8">
+          <ToggleContentSection 
+            selected={selectedPath}
+            className="mx-auto"
+          />
+        </div>
       </div>
     </section>
   );

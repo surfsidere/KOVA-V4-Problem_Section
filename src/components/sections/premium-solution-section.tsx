@@ -141,6 +141,7 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
     <section 
       ref={sectionRef}
       className={cn("relative min-h-screen flex flex-col items-center justify-center px-4 py-8 bg-[#F5F5F5] z-10", className)}
+      aria-label="Soluciones y opciones de integración KOVA"
     >
       {/* Solution Title */}
       <div className="text-center max-w-4xl mx-auto mb-10">

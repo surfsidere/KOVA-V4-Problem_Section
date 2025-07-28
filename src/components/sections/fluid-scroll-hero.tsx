@@ -44,22 +44,28 @@ export function FluidScrollHero({
       return;
     }
 
-    // DRAMATIC INITIAL STATE: Set stage for theatrical entrance
+    // DRAMATIC INITIAL STATE: Set stage for theatrical entrance with GPU acceleration
     gsap.set(titleEl, { 
       opacity: 0, 
       y: 100,
-      scale: 0.8
+      scale: 0.8,
+      force3D: true,
+      willChange: 'transform, opacity'
     });
     
     gsap.set(cardsEl, { 
       opacity: 0,
       y: 60,
-      scale: 0.9
+      scale: 0.9,
+      force3D: true,
+      willChange: 'transform, opacity'
     });
     
     gsap.set(subtitleEl, { 
       opacity: 0, 
-      y: 80 
+      y: 80,
+      force3D: true,
+      willChange: 'transform, opacity'
     });
 
     // Create main timeline for fluid entrance
@@ -118,6 +124,7 @@ export function FluidScrollHero({
     <section 
       ref={containerRef}
       className={cn("relative bg-[#F5F5F5] z-10", className)}
+      aria-label="Presentación principal de KOVA"
     >
       {/* Responsive spacer for proper scroll distance */}
       <div style={{ height: KOVA_DESIGN.spacing.sectionSpacer.lg }} />

@@ -2,11 +2,22 @@ import { useCallback, useRef } from 'react';
 
 /**
  * useDebounce Hook
- * Returns a debounced version of the callback function
- * @param callback - Function to debounce
- * @param delay - Delay in milliseconds
+ * Returns a debounced version of the callback function that delays execution
+ * until after the specified delay has elapsed since the last invocation.
+ * 
+ * @template T - Function type that extends a function with any parameters and return type
+ * @param callback - The function to debounce
+ * @param delay - The delay in milliseconds before executing the callback
+ * @returns A debounced version of the callback function
+ * 
+ * @example
+ * ```typescript
+ * const debouncedSave = useDebounce((data: string) => {
+ *   console.log('Saving:', data);
+ * }, 500);
+ * ```
  */
-export function useDebounce<T extends (...args: any[]) => any>(
+export function useDebounce<T extends (...args: readonly unknown[]) => unknown>(
   callback: T,
   delay: number
 ): T {

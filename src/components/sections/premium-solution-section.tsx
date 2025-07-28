@@ -6,44 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
 import { Globe, Smartphone, Code } from 'lucide-react';
 import { KovaLiquidToggle } from '@/components/ui/kova-liquid-toggle';
-
-// Dynamic Light Text Component
-const DynamicLightText = ({ baseText, dynamicWords, interval = 3000 }: {
-  baseText: string;
-  dynamicWords: string[];
-  interval?: number;
-}) => {
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setIsVisible(false);
-      setTimeout(() => {
-        setCurrentWordIndex((prev) => (prev + 1) % dynamicWords.length);
-        setIsVisible(true);
-      }, 250); // Half of transition duration
-    }, interval);
-
-    return () => clearInterval(timer);
-  }, [dynamicWords.length, interval]);
-
-  return (
-    <>
-      {baseText}{' '}
-      <span 
-        className={`inline-block transition-all duration-500 ease-in-out ${
-          isVisible 
-            ? 'opacity-100 transform translate-y-0' 
-            : 'opacity-0 transform translate-y-5'
-        }`}
-        style={{ color: 'hsl(0 0% 3.9%)' }}
-      >
-        {dynamicWords[currentWordIndex]}
-      </span>
-    </>
-  );
-};
+import { DynamicLightText } from '@/components/shared/dynamic-light-text';
+import { KOVA_DESIGN } from '@/lib/design-system';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);

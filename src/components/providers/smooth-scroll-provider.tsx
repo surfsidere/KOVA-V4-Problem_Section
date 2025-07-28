@@ -44,9 +44,13 @@ export function SmoothScrollProvider({ children }: SmoothScrollProviderProps) {
 
     gsap.ticker.lagSmoothing(0);
 
-    // Update ScrollTrigger on window resize
+    // Update ScrollTrigger on window resize with debouncing
+    let resizeTimer: NodeJS.Timeout;
     const handleResize = () => {
-      ScrollTrigger.refresh();
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        ScrollTrigger.refresh();
+      }, 150);
     };
 
     window.addEventListener('resize', handleResize);

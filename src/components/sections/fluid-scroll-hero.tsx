@@ -143,28 +143,40 @@ export function FluidScrollHero({
         ease: "power2.out"
       }, 3.5);  // Final subtitle completes the story
 
-    // Sticky behavior - everything stays fixed during interaction
-    ScrollTrigger.create({
-      trigger: stickyEl,
-      start: "center center",
-      end: "+=100vh", // Stay sticky for viewport height
-      pin: true,
-      pinSpacing: true,
-      onEnter: () => {
-        // Ensure everything is fully visible and interactive
-        gsap.set([titleEl, subtitleEl], {
-          opacity: 1,
-          y: 0,
-          scale: 1
-        });
-        gsap.set(cardsEl, {
-          opacity: 1
-        });
-        if (cardsEl) {
-          cardsEl.style.pointerEvents = 'auto';
+    // Responsive sticky behavior - updates with viewport changes
+    const createResponsivePin = () => {
+      const viewportHeight = window.innerHeight;
+      const isMobile = window.innerWidth < 768;
+      
+      return ScrollTrigger.create({
+        trigger: stickyEl,
+        start: "center center",
+        end: `+=${viewportHeight}`, // Dynamic viewport height
+        pin: true,
+        pinSpacing: true,
+        refreshPriority: 1, // High priority for responsive updates
+        onEnter: () => {
+          // Ensure everything is fully visible and interactive
+          gsap.set([titleEl, subtitleEl], {
+            opacity: 1,
+            y: 0,
+            scale: 1
+          });
+          gsap.set(cardsEl, {
+            opacity: 1
+          });
+          if (cardsEl) {
+            cardsEl.style.pointerEvents = 'auto';
+          }
+        },
+        onRefresh: () => {
+          // Recalculate on resize to fix responsive spacing
+          console.log('ScrollTrigger refreshed for responsive behavior');
         }
-      }
-    });
+      });
+    };
+    
+    const stickyTrigger = createResponsivePin();
 
     // Vacuum exit - everything gets sucked up together
     ScrollTrigger.create({
@@ -197,7 +209,55 @@ export function FluidScrollHero({
       }
     });
 
+    // Add responsive resize handler
+    const handleResize = () => {
+      // Kill existing triggers
+      ScrollTrigger.getAll().forEach(trigger => {
+        if (trigger.trigger === stickyEl) {
+          trigger.kill();
+        }
+      });
+      
+      // Recreate with new dimensions
+      setTimeout(() => {
+        const newStickyTrigger = createResponsivePin();
+        
+        // Recreate vacuum exit with updated dimensions
+        ScrollTrigger.create({
+          trigger: stickyEl,
+          start: "bottom 60%",
+          end: "bottom top",
+          scrub: 1,
+          onUpdate: (self) => {
+            const progress = self.progress;
+            
+            if (cardsEl && progress > 0) {
+              cardsEl.style.pointerEvents = 'none';
+            }
+            
+            gsap.to([titleEl, subtitleEl], {
+              opacity: Math.max(0, 1 - progress * 1.8),
+              y: -progress * 200,
+              scale: Math.max(0.2, 1 - progress * 0.8),
+              rotation: progress * 10,
+              duration: 0.1,
+              ease: "power2.in"
+            });
+            gsap.to(cardsEl, {
+              opacity: Math.max(0, 1 - progress * 1.8),
+              duration: 0.1,
+              ease: "power2.in"
+            });
+          }
+        });
+      }, 100); // Debounce resize
+    };
+    
+    // Add resize event listener
+    window.addEventListener('resize', handleResize);
+    
     return () => {
+      window.removeEventListener('resize', handleResize);
       ScrollTrigger.getAll().forEach(trigger => {
         if (trigger.trigger === container || trigger.trigger === stickyEl) {
           trigger.kill();

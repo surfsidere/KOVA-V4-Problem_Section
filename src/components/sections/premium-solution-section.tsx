@@ -176,10 +176,10 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
   return (
     <section 
       ref={sectionRef}
-      className={cn("relative min-h-screen flex flex-col items-center justify-center px-4 py-11 bg-[#F5F5F5] z-10", className)}
+      className={cn("relative min-h-screen flex flex-col items-center justify-center px-4 py-8 bg-[#F5F5F5] z-10", className)}
     >
       {/* Solution Title */}
-      <div className="text-center max-w-4xl mx-auto mb-6">
+      <div className="text-center max-w-4xl mx-auto mb-10">
         <h2 
           ref={titleRef}
           className="kova-light-primary text-5xl tracking-tight sm:text-6xl lg:text-7xl mb-4 opacity-0"
@@ -202,7 +202,7 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
       {/* Connection Methods */}
       <div 
         ref={methodsRef}
-        className="max-w-6xl mx-auto mb-8 opacity-0"
+        className="max-w-6xl mx-auto mb-6 opacity-0"
       >
         <div className="bg-white border border-gray-100 rounded-2xl p-6 lg:p-8 shadow-lg">
           <div className="text-center mb-6 kova-card-header-gradient rounded-t-xl -m-6 lg:-m-8 mb-2 p-6 lg:p-8 kova-glow-base">

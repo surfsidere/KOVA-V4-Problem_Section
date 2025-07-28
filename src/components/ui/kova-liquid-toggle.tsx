@@ -161,8 +161,13 @@ export function KovaLiquidToggle({
     >
       {/* Conditional Bounding Box */}
       {selected && (
-        <div className="absolute inset-0 border-2 border-opacity-50 rounded-full transition-all pointer-events-none" 
+        <div className="absolute border-2 border-opacity-50 rounded-full transition-all pointer-events-none" 
           style={{ 
+            width: TOGGLE_DIMENSIONS.width + 8,
+            height: TOGGLE_DIMENSIONS.height + 8,
+            top: -4,
+            left: '50%',
+            transform: 'translateX(-50%)',
             borderColor: COLORS.neonGold,
             transitionDuration: '300ms'
           }} />

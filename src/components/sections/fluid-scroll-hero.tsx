@@ -177,7 +177,7 @@ export function FluidScrollHero({
           <div className="text-center max-w-5xl">
             <h1 
               ref={titleRef}
-              className={`kova-light-primary ${KOVA_DESIGN.typography.sizes.xl} opacity-0`}
+              className="kova-light-primary text-4xl tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl opacity-0"
             >
               <DynamicLightText 
                 baseText="Las asistencias tradicionales se han quedado"
@@ -204,7 +204,7 @@ export function FluidScrollHero({
           <div className="text-center max-w-4xl">
             <p 
               ref={subtitleRef}
-              className={`kova-light-secondary ${KOVA_DESIGN.typography.sizes.lg} opacity-0`}
+              className="kova-light-secondary text-xl opacity-0"
             >
               {subtitle}
             </p>

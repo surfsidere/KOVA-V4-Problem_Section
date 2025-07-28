@@ -94,11 +94,12 @@ export const KOVA_DESIGN = {
       headline: "'Poppins', sans-serif"
     },
     
-    // Responsive font sizes
+    // Responsive font sizes (CSS values, not Tailwind classes)
     sizes: {
       base: 'clamp(1rem, 2.5vw, 1.25rem)',
-      lg: 'text-xl',
-      xl: 'text-4xl tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl'
+      lg: 'clamp(1.25rem, 3vw, 1.5rem)',     // ~20-24px
+      xl: 'clamp(2.25rem, 6vw, 4.5rem)',     // ~36-72px (matches text-4xl to text-7xl)
+      hero: 'clamp(3rem, 8vw, 6rem)'         // ~48-96px for extra large displays
     }
   },
   

@@ -172,16 +172,16 @@ export const InteractiveDiagnosisDeck = ({
                   "transition-all duration-300",
                   isSelected ? "shadow-2xl" : "shadow-lg hover:shadow-xl"
                 )}>
-                  {/* Card Header - Responsive */}
-                  <div className="p-4 sm:p-6 border-b border-gray-200 kova-card-header-gradient kova-glow-base">
+                  {/* Card Header */}
+                  <div className="p-6 border-b border-gray-200 kova-card-header-gradient kova-glow-base">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2 sm:gap-3">
-                        <div className="p-1.5 sm:p-2 rounded-lg kova-icon-gradient-dark kova-glow-base hover:kova-glow-hover transition-all duration-300">
-                          <div className="text-[#FFF9E1] w-4 h-4 sm:w-6 sm:h-6 flex items-center justify-center">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg kova-icon-gradient-dark kova-glow-base hover:kova-glow-hover transition-all duration-300">
+                          <div className="text-[#FFF9E1]">
                             {painPoint.icon}
                           </div>
                         </div>
-                        <h3 className="text-base sm:text-lg font-semibold leading-tight" style={{ color: 'hsl(0 0% 3.9%)' }}>
+                        <h3 className="text-lg font-semibold" style={{ color: 'hsl(0 0% 3.9%)' }}>
                           {painPoint.title}
                         </h3>
                       </div>
@@ -207,8 +207,8 @@ export const InteractiveDiagnosisDeck = ({
                     {painPoint.icon}
                   </div>
 
-                  {/* Card Content - Responsive */}
-                  <div className="p-4 sm:p-6">
+                  {/* Card Content */}
+                  <div className="p-6">
                     <AnimatePresence>
                       {isSelected && (
                         <motion.div
@@ -217,11 +217,11 @@ export const InteractiveDiagnosisDeck = ({
                           exit={{ opacity: 0, y: 20 }}
                           transition={{ delay: 0.1 }}
                         >
-                          <p className="text-sm sm:text-base leading-relaxed" style={{ color: 'hsl(0 0% 3.9%)' }}>
+                          <p className="leading-relaxed" style={{ color: 'hsl(0 0% 3.9%)' }}>
                             {painPoint.description}
                           </p>
-                          <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200">
-                            <span className="text-xs sm:text-sm" style={{ color: '#4A4A4A' }}>
+                          <div className="mt-4 pt-4 border-t border-gray-200">
+                            <span className="text-sm" style={{ color: '#4A4A4A' }}>
                               Haz clic para cerrar
                             </span>
                           </div>
@@ -231,15 +231,15 @@ export const InteractiveDiagnosisDeck = ({
 
                     {!isSelected && (
                       <div className="space-y-2">
-                        <div className="h-2 sm:h-3 bg-gray-200 rounded w-3/4"></div>
-                        <div className="h-2 sm:h-3 bg-gray-200 rounded w-1/2"></div>
+                        <div className="h-3 bg-gray-200 rounded w-3/4"></div>
+                        <div className="h-3 bg-gray-200 rounded w-1/2"></div>
                       </div>
                     )}
                   </div>
 
-                  {/* Card Footer - Responsive - only visible when not selected */}
+                  {/* Card Footer - only visible when not selected */}
                   {!isSelected && (
-                    <div className="absolute bottom-3 sm:bottom-4 left-4 sm:left-6 right-4 sm:right-6">
+                    <div className="absolute bottom-4 left-6 right-6">
                       <div className="text-xs" style={{ color: '#4A4A4A' }}>
                         Haz clic para ver más
                       </div>

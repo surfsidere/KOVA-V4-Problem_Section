@@ -217,14 +217,14 @@ export function FluidScrollHero({
       {/* TWO-SCENE THEATER: Full viewport orchestration */}
       <div 
         ref={stickyRef}
-        className="relative min-h-screen flex flex-col px-4 sm:px-6 lg:px-8"
+        className="relative min-h-screen flex flex-col px-6"
       >
-        {/* SCENE 1: Title - Mobile adaptive spacing for card prominence */}
-        <div className="flex-[3] md:flex-1 flex items-end justify-center pb-8 sm:pb-12 md:pb-16 lg:pb-20">
-          <div className="text-center max-w-5xl px-4">
+        {/* SCENE 1: Title - Top third of viewport (RESTORED ORIGINAL) */}
+        <div className="flex-1 flex items-end justify-center pb-8">
+          <div className="text-center max-w-5xl">
             <h1 
               ref={titleRef}
-              className="kova-light-primary text-3xl tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl opacity-0"
+              className="kova-light-primary text-4xl tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl opacity-0"
             >
               <DynamicLightText 
                 baseText="Las asistencias tradicionales se han quedado"
@@ -235,23 +235,23 @@ export function FluidScrollHero({
           </div>
         </div>
         
-        {/* SCENE 2: Cards - Center prominence with mobile/desktop balance */}
-        <div className="flex-[4] md:flex-1 flex items-center justify-center py-12 sm:py-16 md:py-20 lg:py-24">
+        {/* SCENE 2: Cards - Center stage with breathing room (RESTORED ORIGINAL) */}
+        <div className="flex-1 flex items-center justify-center py-16">
           <div 
             ref={cardsRef}
-            className="w-full px-4"
+            className="w-full"
             style={{ pointerEvents: 'auto' }}
           >
             <InteractiveDiagnosisDeck />
           </div>
         </div>
         
-        {/* SCENE 3: Subtitle - Mobile adaptive spacing balance */}
-        <div className="flex-[3] md:flex-1 flex items-start justify-center pt-8 sm:pt-12 md:pt-16 lg:pt-20">
-          <div className="text-center max-w-4xl px-4">
+        {/* SCENE 3: Subtitle - Bottom third of viewport (RESTORED ORIGINAL) */}
+        <div className="flex-1 flex items-start justify-center pt-8">
+          <div className="text-center max-w-4xl">
             <p 
               ref={subtitleRef}
-              className="kova-light-secondary text-lg sm:text-xl opacity-0"
+              className="kova-light-secondary text-xl opacity-0"
             >
               {subtitle}
             </p>

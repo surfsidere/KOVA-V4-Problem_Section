@@ -165,21 +165,7 @@ export function KovaLiquidToggle({
       role="radiogroup"
       aria-label="Seleccionar tipo de usuario"
       tabIndex={-1}
-      onBlur={() => {/* Bounding box will disappear when clicking outside */}}
     >
-      {/* Conditional Bounding Box */}
-      {selected && (
-        <div className="absolute border-2 border-opacity-50 rounded-full transition-all pointer-events-none" 
-          style={{ 
-            width: TOGGLE_DIMENSIONS.width + 8,
-            height: TOGGLE_DIMENSIONS.height + 8,
-            top: -4,
-            left: '50%',
-            transform: 'translateX(-50%)',
-            borderColor: COLORS.neonGold,
-            transitionDuration: '300ms'
-          }} />
-      )}
       {/* Main Toggle Container */}
       <div className="relative rounded-full shadow-xl overflow-hidden" 
         style={{

@@ -12,36 +12,6 @@ interface PainPoint {
   icon?: React.ReactNode;
 }
 
-// Diagnostic marker component
-const CenterMarker = () => (
-  <div 
-    className="fixed w-4 h-4 bg-[#FFF9E1] z-50"
-    style={{
-      left: '50vw',
-      top: '50vh',
-      transform: 'translate(-50%, -50%)',
-      boxShadow: '0 0 0 2px white, 0 0 0 4px #FFF9E1'
-    }}
-  />
-);
-
-// Grid overlay for viewport visualization
-const GridOverlay = () => (
-  <div 
-    className="fixed inset-0 pointer-events-none z-40"
-    style={{
-      background: `
-        linear-gradient(to right, rgba(255,0,0,0.1) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,0,0,0.1) 1px, transparent 1px)
-      `,
-      backgroundSize: '10vw 10vh',
-      backgroundPosition: 'center center'
-    }}
-  >
-    <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-[#FFF9E1]/30" />
-    <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-[#FFF9E1]/30" />
-  </div>
-);
 
 export const InteractiveDiagnosisDeck = ({
   painPoints = [
@@ -81,21 +51,10 @@ export const InteractiveDiagnosisDeck = ({
 }) => {
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
-  const [showDiagnostics, setShowDiagnostics] = useState(false);
 
   // Initialize the deck animation
   useEffect(() => {
     const timer = setTimeout(() => setIsInitialized(true), 100);
-    
-    // Debug logging (commented for production)
-    // console.log('=== CENTERING DIAGNOSTICS ===');
-    // console.log('Viewport:', {
-    //   width: window.innerWidth,
-    //   height: window.innerHeight,
-    //   centerX: window.innerWidth / 2,
-    //   centerY: window.innerHeight / 2
-    // });
-    
     return () => clearTimeout(timer);
   }, []);
 
@@ -108,59 +67,47 @@ export const InteractiveDiagnosisDeck = ({
   };
 
   const getCardPosition = (index: number, total: number) => {
-    const baseOffset = 60;
-    const rotationBase = 6;
+    // Responsive card positioning based on screen size
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+    const isTablet = typeof window !== 'undefined' && window.innerWidth < 1024;
     
-    // Use CSS centering: position from center (0,0) with offsets
+    // Adaptive spacing based on viewport
+    const baseOffset = isMobile ? 40 : isTablet ? 50 : 60;
+    const verticalSpacing = isMobile ? 15 : 25;
+    const rotationBase = isMobile ? 4 : 6;
+    
     const centerX = 0;
     const centerY = 0;
 
     const position = {
       x: centerX + (index - Math.floor(total / 2)) * baseOffset,
-      y: centerY + index * 25,
+      y: centerY + index * verticalSpacing,
       rotate: (index - Math.floor(total / 2)) * rotationBase,
       scale: 1 - (index * 0.01),
       zIndex: total - index
     };
     
-    // console.log(`Card ${index} position:`, position);
-    
     return position;
   };
 
   const getInactiveCardPosition = (index: number, selectedIndex: number) => {
-    const offset = index < selectedIndex ? -120 : 120;
+    // Responsive inactive positioning
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+    const offset = index < selectedIndex ? (isMobile ? -80 : -120) : (isMobile ? 80 : 120);
     const centerX = 0;
     const centerY = 0;
     
     return {
       x: centerX + offset,
-      y: centerY + 60,
+      y: centerY + (isMobile ? 40 : 60),
       rotate: index < selectedIndex ? -20 : 20,
-      scale: 0.75,
+      scale: isMobile ? 0.65 : 0.75,
       zIndex: 1
     };
   };
 
   return (
     <>
-      {/* Diagnostic components */}
-      {showDiagnostics && (
-        <>
-          <CenterMarker />
-          <GridOverlay />
-          <div className="fixed top-4 left-4 bg-black/80 text-white p-4 rounded z-50 font-mono text-xs">
-            <div>Viewport: {typeof window !== 'undefined' ? `${window.innerWidth}x${window.innerHeight}` : 'loading'}</div>
-            <div>Center: {typeof window !== 'undefined' ? `${window.innerWidth/2}, ${window.innerHeight/2}` : 'loading'}</div>
-            <button 
-              onClick={() => setShowDiagnostics(false)}
-              className="mt-2 px-2 py-1 bg-[#FFF9E1] text-black rounded"
-            >
-              Hide Diagnostics
-            </button>
-          </div>
-        </>
-      )}
       
       <div className="fixed inset-0 pointer-events-none z-10">
         <div className="relative w-full h-full flex items-center justify-center">
@@ -185,11 +132,13 @@ export const InteractiveDiagnosisDeck = ({
                 key={painPoint.id}
                 className="absolute cursor-pointer"
                 style={{
-                  width: '320px',  // w-80 = 20rem = 320px
-                  height: '384px', // h-96 = 24rem = 384px
-                  left: 'calc(50% - 160px)',  // Half of width
-                  top: 'calc(50% - 192px)'    // Half of height
-                  // Using calc() instead of transform - this fixed the centering!
+                  // Responsive card dimensions
+                  width: 'clamp(280px, 85vw, 320px)',
+                  height: 'clamp(320px, 45vh, 384px)',
+                  left: '50%',
+                  top: '50%',
+                  transform: `translate(-50%, -50%) translateX(${position.x}px) translateY(${position.y}px) rotate(${position.rotate}deg) scale(${position.scale})`,
+                  zIndex: position.zIndex
                 }}
                 initial={{
                   x: 0,
@@ -200,10 +149,10 @@ export const InteractiveDiagnosisDeck = ({
                   zIndex: painPoints.length - index
                 }}
                 animate={{
-                  x: position.x,
-                  y: position.y,
-                  rotate: position.rotate,
-                  scale: position.scale,
+                  x: 0, // Position handled by CSS transform
+                  y: 0, // Position handled by CSS transform
+                  rotate: 0, // Rotation handled by CSS transform
+                  scale: 1, // Scale handled by CSS transform
                   opacity: isInitialized ? 1 : 0,
                   zIndex: position.zIndex
                 }}
@@ -223,19 +172,19 @@ export const InteractiveDiagnosisDeck = ({
               >
                 <div className={cn(
                   "w-full h-full bg-white border border-gray-100 rounded-xl shadow-lg overflow-visible",
-                  "transition-shadow duration-300",
+                  "transition-all duration-300",
                   isSelected ? "shadow-2xl" : "shadow-lg hover:shadow-xl"
                 )}>
-                  {/* Card Header */}
-                  <div className="p-6 border-b border-gray-200 kova-card-header-gradient kova-glow-base">
+                  {/* Card Header - Responsive */}
+                  <div className="p-4 sm:p-6 border-b border-gray-200 kova-card-header-gradient kova-glow-base">
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg kova-icon-gradient-dark kova-glow-base hover:kova-glow-hover transition-all duration-300">
-                          <div className="text-[#FFF9E1]">
+                      <div className="flex items-center gap-2 sm:gap-3">
+                        <div className="p-1.5 sm:p-2 rounded-lg kova-icon-gradient-dark kova-glow-base hover:kova-glow-hover transition-all duration-300">
+                          <div className="text-[#FFF9E1] w-4 h-4 sm:w-6 sm:h-6 flex items-center justify-center">
                             {painPoint.icon}
                           </div>
                         </div>
-                        <h3 className="text-lg font-semibold" style={{ color: 'hsl(0 0% 3.9%)' }}>
+                        <h3 className="text-base sm:text-lg font-semibold leading-tight" style={{ color: 'hsl(0 0% 3.9%)' }}>
                           {painPoint.title}
                         </h3>
                       </div>
@@ -261,8 +210,8 @@ export const InteractiveDiagnosisDeck = ({
                     {painPoint.icon}
                   </div>
 
-                  {/* Card Content */}
-                  <div className="p-6">
+                  {/* Card Content - Responsive */}
+                  <div className="p-4 sm:p-6">
                     <AnimatePresence>
                       {isSelected && (
                         <motion.div
@@ -271,11 +220,11 @@ export const InteractiveDiagnosisDeck = ({
                           exit={{ opacity: 0, y: 20 }}
                           transition={{ delay: 0.1 }}
                         >
-                          <p className="leading-relaxed" style={{ color: 'hsl(0 0% 3.9%)' }}>
+                          <p className="text-sm sm:text-base leading-relaxed" style={{ color: 'hsl(0 0% 3.9%)' }}>
                             {painPoint.description}
                           </p>
-                          <div className="mt-4 pt-4 border-t border-gray-200">
-                            <span className="text-sm" style={{ color: '#4A4A4A' }}>
+                          <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-200">
+                            <span className="text-xs sm:text-sm" style={{ color: '#4A4A4A' }}>
                               Haz clic para cerrar
                             </span>
                           </div>
@@ -285,15 +234,15 @@ export const InteractiveDiagnosisDeck = ({
 
                     {!isSelected && (
                       <div className="space-y-2">
-                        <div className="h-3 bg-gray-200 rounded w-3/4"></div>
-                        <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                        <div className="h-2 sm:h-3 bg-gray-200 rounded w-3/4"></div>
+                        <div className="h-2 sm:h-3 bg-gray-200 rounded w-1/2"></div>
                       </div>
                     )}
                   </div>
 
-                  {/* Card Footer - only visible when not selected */}
+                  {/* Card Footer - Responsive - only visible when not selected */}
                   {!isSelected && (
-                    <div className="absolute bottom-4 left-6 right-6">
+                    <div className="absolute bottom-3 sm:bottom-4 left-4 sm:left-6 right-4 sm:right-6">
                       <div className="text-xs" style={{ color: '#4A4A4A' }}>
                         Haz clic para ver más
                       </div>

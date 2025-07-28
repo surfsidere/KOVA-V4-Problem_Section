@@ -91,6 +91,62 @@
     will-change: transform;
   }
   
+  /* Responsive Design Tokens */
+  .kova-spacing-xs {
+    padding: clamp(0.5rem, 2vw, 1rem);
+  }
+  
+  .kova-spacing-sm {
+    padding: clamp(1rem, 3vw, 1.5rem);
+  }
+  
+  .kova-spacing-md {
+    padding: clamp(1.5rem, 4vw, 2rem);
+  }
+  
+  .kova-spacing-lg {
+    padding: clamp(2rem, 5vw, 3rem);
+  }
+  
+  .kova-spacing-xl {
+    padding: clamp(3rem, 6vw, 4rem);
+  }
+  
+  /* Responsive Typography Scale */
+  .kova-text-fluid-sm {
+    font-size: clamp(0.875rem, 2.5vw, 1rem);
+  }
+  
+  .kova-text-fluid-base {
+    font-size: clamp(1rem, 3vw, 1.125rem);
+  }
+  
+  .kova-text-fluid-lg {
+    font-size: clamp(1.125rem, 3.5vw, 1.25rem);
+  }
+  
+  .kova-text-fluid-xl {
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+  }
+  
+  /* Container Queries Support */
+  .kova-card-responsive {
+    width: clamp(280px, 85vw, 320px);
+    height: clamp(320px, 45vh, 384px);
+  }
+  
+  .kova-container-sm {
+    max-width: clamp(320px, 90vw, 640px);
+  }
+  
+  .kova-container-md {
+    max-width: clamp(640px, 85vw, 768px);
+  }
+  
+  .kova-container-lg {
+    max-width: clamp(768px, 80vw, 1024px);
+  }
+  
   /* Custom font classes */
   .font-headline {
     font-family: 'Poppins', sans-serif;
@@ -100,17 +156,20 @@
     font-family: 'Inter', sans-serif;
   }
 
-  /* KOVA Light Section Typography */
+  /* KOVA Light Section Typography - Enhanced Responsive */
   .kova-light-primary {
     color: hsl(0 0% 3.9%);
     font-family: 'Space Grotesk', sans-serif;
     font-weight: bold;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
   }
 
   .kova-light-secondary {
     color: #4A4A4A;
     font-family: Arial, Helvetica, sans-serif;
     line-height: 1.625;
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
   }
 
   /* KOVA Light Gradients */

@@ -71,14 +71,17 @@ export function KovaLiquidToggle({
 
   // Animate indicator when selection changes
   useEffect(() => {
-    if (!indicatorRef.current || isAnimating) return;
+    if (!indicatorRef.current) return;
     
     const targetX = getIndicatorPosition;
     setIsAnimating(true);
     
+    // Immediately update position for selected state, animate for hover
+    const duration = selected ? 0.3 : 0.5;
+    
     gsap.to(indicatorRef.current, {
       x: targetX,
-      duration: ANIMATIONS.duration / 1000,
+      duration: duration,
       ease: ANIMATIONS.ease,
       onComplete: () => setIsAnimating(false)
     });
@@ -115,8 +118,11 @@ export function KovaLiquidToggle({
   }, [selected]);
 
   const handleOptionClick = (option: 'instituciones' | 'aliados') => {
-    if (isAnimating) return;
+    // Always allow clicks - don't block on isAnimating
     onSelectionChange(option);
+    
+    // Clear hover state on click to prevent interference
+    setHoveredOption(null);
     
     // Micro-interaction: slight scale feedback
     if (indicatorRef.current) {
@@ -131,8 +137,10 @@ export function KovaLiquidToggle({
   };
 
   const handleOptionHover = (option: 'instituciones' | 'aliados' | null) => {
-    if (isAnimating) return;
-    setHoveredOption(option);
+    // Only set hover state if no selection is active
+    if (!selected) {
+      setHoveredOption(option);
+    }
   };
 
   const handleKeyDown = (event: React.KeyboardEvent, option: 'instituciones' | 'aliados') => {

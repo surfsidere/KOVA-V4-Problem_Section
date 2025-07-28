@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cn } from '@/lib/utils';
-import { Globe, Smartphone, Code, Building2, Users, ChevronRight } from 'lucide-react';
+import { Globe, Smartphone, Code } from 'lucide-react';
+import { KovaLiquidToggle, KovaGooeyFilter } from '@/components/ui/kova-liquid-toggle';
 
 // Dynamic Light Text Component
 const DynamicLightText = ({ baseText, dynamicWords, interval = 3000 }: {
@@ -87,13 +88,6 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
   const methodsRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLDivElement>(null);
   const [selectedPath, setSelectedPath] = useState<'instituciones' | 'aliados' | null>(null);
-  
-  // Liquid fill animation states
-  const [liquidPosition, setLiquidPosition] = useState<'instituciones' | 'aliados' | 'none'>('instituciones');
-  const [hoveredOption, setHoveredOption] = useState<'instituciones' | 'aliados' | null>(null);
-  const institucionesRef = useRef<HTMLButtonElement>(null);
-  const aliadosRef = useRef<HTMLButtonElement>(null);
-  const liquidAnimationRef = useRef<gsap.core.Timeline | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -163,66 +157,9 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
     };
   }, []);
 
-  // Liquid fill animation
-  useEffect(() => {
-    if (!institucionesRef.current || !aliadosRef.current || selectedPath) return;
-
-    const instituciones = institucionesRef.current.querySelector('.liquid-fill') as HTMLElement;
-    const aliados = aliadosRef.current.querySelector('.liquid-fill') as HTMLElement;
-
-    if (!instituciones || !aliados) return;
-
-    // Create liquid flow animation sequence
-    liquidAnimationRef.current = gsap.timeline({
-      delay: 0.5,
-      onComplete: () => {
-        setLiquidPosition('none');
-      }
-    });
-
-    // Start with instituciones filled
-    gsap.set(instituciones, { scaleX: 1, transformOrigin: 'left center' });
-    gsap.set(aliados, { scaleX: 0, transformOrigin: 'left center' });
-
-    liquidAnimationRef.current
-      // Drain from instituciones
-      .to(instituciones, {
-        scaleX: 0,
-        duration: 1.5,
-        ease: "power2.inOut"
-      })
-      // Fill aliados
-      .to(aliados, {
-        scaleX: 1,
-        duration: 1.5,
-        ease: "power2.inOut"
-      }, "-=0.5")
-      // Drain from aliados
-      .to(aliados, {
-        scaleX: 0,
-        duration: 1.5,
-        ease: "power2.inOut"
-      }, "+=0.5");
-
-    return () => {
-      liquidAnimationRef.current?.kill();
-    };
-  }, [selectedPath]);
 
   const handlePathSelection = (path: 'instituciones' | 'aliados') => {
     setSelectedPath(path);
-    
-    // Fill the selected button
-    const targetButton = path === 'instituciones' ? institucionesRef.current : aliadosRef.current;
-    const liquidFill = targetButton?.querySelector('.liquid-fill') as HTMLElement;
-    
-    if (liquidFill) {
-      gsap.to(liquidFill, {
-        scaleX: 1,
-        duration: 0.6,
-        ease: "power3.out"
-      });
-    }
     
     // Premium interaction feedback
     if (toggleRef.current) {
@@ -236,43 +173,12 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
     }
   };
 
-  const handleHover = (option: 'instituciones' | 'aliados' | null) => {
-    if (selectedPath) return; // Don't animate if already selected
-    
-    setHoveredOption(option);
-    
-    if (option && liquidPosition === 'none') {
-      // Partially fill on hover
-      const targetButton = option === 'instituciones' ? institucionesRef.current : aliadosRef.current;
-      const liquidFill = targetButton?.querySelector('.liquid-fill') as HTMLElement;
-      
-      if (liquidFill) {
-        gsap.to(liquidFill, {
-          scaleX: 0.3,
-          duration: 0.3,
-          ease: "power2.out"
-        });
-      }
-    } else if (!option && liquidPosition === 'none') {
-      // Drain on hover out
-      const instituciones = institucionesRef.current?.querySelector('.liquid-fill') as HTMLElement;
-      const aliados = aliadosRef.current?.querySelector('.liquid-fill') as HTMLElement;
-      
-      if (instituciones && aliados) {
-        gsap.to([instituciones, aliados], {
-          scaleX: 0,
-          duration: 0.3,
-          ease: "power2.out"
-        });
-      }
-    }
-  };
-
   return (
     <section 
       ref={sectionRef}
       className={cn("relative min-h-screen flex flex-col items-center justify-center px-4 py-16 bg-[#F5F5F5] z-10", className)}
     >
+      <KovaGooeyFilter />
       {/* Solution Title */}
       <div className="text-center max-w-4xl mx-auto mb-8">
         <h2 
@@ -339,67 +245,15 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
         ref={toggleRef}
         className="text-center max-w-4xl mx-auto opacity-0"
       >
-        <h3 className="kova-light-primary text-2xl mb-6">
+        <h3 className="kova-light-primary text-2xl mb-8">
           ¿Cuál es tu enfoque?
         </h3>
         
-        <div className="relative flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button
-            ref={institucionesRef}
-            onClick={() => handlePathSelection('instituciones')}
-            onMouseEnter={() => handleHover('instituciones')}
-            onMouseLeave={() => handleHover(null)}
-            className={cn(
-              "group relative px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 overflow-hidden",
-              selectedPath === 'instituciones'
-                ? "border-2 border-[#FFF9E1] text-[#FFF9E1] shadow-lg scale-105"
-                : selectedPath
-                ? "border-2 border-gray-300 text-gray-600 opacity-50"
-                : "border-2 border-[#FFF9E1] text-[#FFF9E1] hover:shadow-lg",
-              "focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2"
-            )}
-          >
-            {/* Liquid fill background */}
-            <div 
-              className="liquid-fill absolute inset-0 kova-selector-gradient origin-left"
-              style={{ transform: 'scaleX(0)' }}
-            />
-            <span className="relative z-10 flex items-center gap-2">
-              <Building2 className="w-5 h-5" />
-              Instituciones
-              <ChevronRight className="w-4 h-4" />
-            </span>
-          </button>
-
-          <div className="kova-light-secondary font-medium z-0">o</div>
-
-          <button
-            ref={aliadosRef}
-            onClick={() => handlePathSelection('aliados')}
-            onMouseEnter={() => handleHover('aliados')}
-            onMouseLeave={() => handleHover(null)}
-            className={cn(
-              "group relative px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 overflow-hidden",
-              selectedPath === 'aliados'
-                ? "border-2 border-[#FFF9E1] text-[#FFF9E1] shadow-lg scale-105"
-                : selectedPath
-                ? "border-2 border-gray-300 text-gray-600 opacity-50"
-                : "border-2 border-[#FFF9E1] text-[#FFF9E1] hover:shadow-lg",
-              "focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2"
-            )}
-          >
-            {/* Liquid fill background */}
-            <div 
-              className="liquid-fill absolute inset-0 kova-selector-gradient origin-left"
-              style={{ transform: 'scaleX(0)' }}
-            />
-            <span className="relative z-10 flex items-center gap-2">
-              <Users className="w-5 h-5" />
-              Aliados
-              <ChevronRight className="w-4 h-4" />
-            </span>
-          </button>
-        </div>
+        <KovaLiquidToggle
+          selected={selectedPath}
+          onSelectionChange={handlePathSelection}
+          className="mx-auto"
+        />
 
         {selectedPath && (
           <div className="mt-8 p-6 bg-white rounded-xl border border-gray-200 shadow-sm">

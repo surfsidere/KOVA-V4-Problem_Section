@@ -150,11 +150,6 @@
     filter: drop-shadow(0 0 8px rgba(255,249,225,0.9));
   }
 
-  /* Liquid fill animation */
-  .liquid-fill {
-    transition: transform 0.3s ease-out;
-    will-change: transform;
-  }
   
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {

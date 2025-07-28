@@ -88,13 +88,12 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
   const toggleRef = useRef<HTMLDivElement>(null);
   const [selectedPath, setSelectedPath] = useState<'instituciones' | 'aliados' | null>(null);
   
-  // Fluid selector animation states
-  const [isAnimating, setIsAnimating] = useState(true);
+  // Liquid fill animation states
+  const [liquidPosition, setLiquidPosition] = useState<'instituciones' | 'aliados' | 'none'>('instituciones');
   const [hoveredOption, setHoveredOption] = useState<'instituciones' | 'aliados' | null>(null);
-  const indicatorRef = useRef<HTMLDivElement>(null);
   const institucionesRef = useRef<HTMLButtonElement>(null);
   const aliadosRef = useRef<HTMLButtonElement>(null);
-  const animationTimeline = useRef<gsap.core.Timeline | null>(null);
+  const liquidAnimationRef = useRef<gsap.core.Timeline | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -164,100 +163,65 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
     };
   }, []);
 
-  // Fluid selector animation
+  // Liquid fill animation
   useEffect(() => {
-    if (!indicatorRef.current || !institucionesRef.current || !aliadosRef.current || selectedPath) return;
+    if (!institucionesRef.current || !aliadosRef.current || selectedPath) return;
 
-    const indicator = indicatorRef.current;
-    const instituciones = institucionesRef.current;
-    const aliados = aliadosRef.current;
+    const instituciones = institucionesRef.current.querySelector('.liquid-fill') as HTMLElement;
+    const aliados = aliadosRef.current.querySelector('.liquid-fill') as HTMLElement;
 
-    // Calculate positions
-    const updatePositions = () => {
-      const institucionesRect = instituciones.getBoundingClientRect();
-      const aliadosRect = aliados.getBoundingClientRect();
-      const containerRect = indicator.parentElement?.getBoundingClientRect();
-      
-      if (!containerRect) return;
+    if (!instituciones || !aliados) return;
 
-      return {
-        institucionesX: institucionesRect.left - containerRect.left + institucionesRect.width / 2,
-        aliadosX: aliadosRect.left - containerRect.left + aliadosRect.width / 2,
-        centerY: institucionesRect.height / 2
-      };
-    };
-
-    const positions = updatePositions();
-    if (!positions) return;
-
-    // Set initial position
-    gsap.set(indicator, {
-      x: positions.institucionesX,
-      y: positions.centerY,
-      xPercent: -50,
-      yPercent: -50,
-      opacity: 0
+    // Create liquid flow animation sequence
+    liquidAnimationRef.current = gsap.timeline({
+      delay: 0.5,
+      onComplete: () => {
+        setLiquidPosition('none');
+      }
     });
 
-    // Create oscillating timeline
-    animationTimeline.current = gsap.timeline({
-      repeat: -1,
-      yoyo: true,
-      paused: !isAnimating,
-      delay: 0.5
-    });
+    // Start with instituciones filled
+    gsap.set(instituciones, { scaleX: 1, transformOrigin: 'left center' });
+    gsap.set(aliados, { scaleX: 0, transformOrigin: 'left center' });
 
-    // Fade in and start oscillating
-    gsap.to(indicator, {
-      opacity: 1,
-      duration: 0.5,
-      ease: "power2.out"
-    });
-
-    animationTimeline.current
-      .to(indicator, {
-        x: positions.aliadosX,
-        duration: 3,
-        ease: "sine.inOut"
+    liquidAnimationRef.current
+      // Drain from instituciones
+      .to(instituciones, {
+        scaleX: 0,
+        duration: 1.5,
+        ease: "power2.inOut"
       })
-      .to(indicator, {
-        x: positions.institucionesX,
-        duration: 3,
-        ease: "sine.inOut"
-      });
-
-    // Breathing glow animation
-    gsap.to(indicator, {
-      scale: 1.1,
-      duration: 1.5,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut"
-    });
+      // Fill aliados
+      .to(aliados, {
+        scaleX: 1,
+        duration: 1.5,
+        ease: "power2.inOut"
+      }, "-=0.5")
+      // Drain from aliados
+      .to(aliados, {
+        scaleX: 0,
+        duration: 1.5,
+        ease: "power2.inOut"
+      }, "+=0.5");
 
     return () => {
-      animationTimeline.current?.kill();
-      gsap.killTweensOf(indicator);
+      liquidAnimationRef.current?.kill();
     };
-  }, [isAnimating, selectedPath]);
+  }, [selectedPath]);
 
   const handlePathSelection = (path: 'instituciones' | 'aliados') => {
     setSelectedPath(path);
-    setIsAnimating(false);
     
-    // Lock indicator to selected position
-    if (indicatorRef.current && (path === 'instituciones' ? institucionesRef.current : aliadosRef.current)) {
-      const targetButton = path === 'instituciones' ? institucionesRef.current : aliadosRef.current;
-      const containerRect = indicatorRef.current.parentElement?.getBoundingClientRect();
-      const buttonRect = targetButton.getBoundingClientRect();
-      
-      if (containerRect) {
-        gsap.to(indicatorRef.current, {
-          x: buttonRect.left - containerRect.left + buttonRect.width / 2,
-          duration: 0.5,
-          ease: "power3.out"
-        });
-      }
+    // Fill the selected button
+    const targetButton = path === 'instituciones' ? institucionesRef.current : aliadosRef.current;
+    const liquidFill = targetButton?.querySelector('.liquid-fill') as HTMLElement;
+    
+    if (liquidFill) {
+      gsap.to(liquidFill, {
+        scaleX: 1,
+        duration: 0.6,
+        ease: "power3.out"
+      });
     }
     
     // Premium interaction feedback
@@ -277,27 +241,30 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
     
     setHoveredOption(option);
     
-    if (option) {
-      // Pause main animation
-      animationTimeline.current?.pause();
+    if (option && liquidPosition === 'none') {
+      // Partially fill on hover
+      const targetButton = option === 'instituciones' ? institucionesRef.current : aliadosRef.current;
+      const liquidFill = targetButton?.querySelector('.liquid-fill') as HTMLElement;
       
-      // Move indicator to hovered button
-      if (indicatorRef.current && (option === 'instituciones' ? institucionesRef.current : aliadosRef.current)) {
-        const targetButton = option === 'instituciones' ? institucionesRef.current : aliadosRef.current;
-        const containerRect = indicatorRef.current.parentElement?.getBoundingClientRect();
-        const buttonRect = targetButton.getBoundingClientRect();
-        
-        if (containerRect) {
-          gsap.to(indicatorRef.current, {
-            x: buttonRect.left - containerRect.left + buttonRect.width / 2,
-            duration: 0.3,
-            ease: "power2.out"
-          });
-        }
+      if (liquidFill) {
+        gsap.to(liquidFill, {
+          scaleX: 0.3,
+          duration: 0.3,
+          ease: "power2.out"
+        });
       }
-    } else {
-      // Resume animation
-      animationTimeline.current?.play();
+    } else if (!option && liquidPosition === 'none') {
+      // Drain on hover out
+      const instituciones = institucionesRef.current?.querySelector('.liquid-fill') as HTMLElement;
+      const aliados = aliadosRef.current?.querySelector('.liquid-fill') as HTMLElement;
+      
+      if (instituciones && aliados) {
+        gsap.to([instituciones, aliados], {
+          scaleX: 0,
+          duration: 0.3,
+          ease: "power2.out"
+        });
+      }
     }
   };
 
@@ -377,37 +344,27 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
         </h3>
         
         <div className="relative flex flex-col sm:flex-row gap-4 justify-center items-center">
-          {/* Floating Indicator */}
-          {!selectedPath && (
-            <div 
-              ref={indicatorRef}
-              className="kova-fluid-indicator kova-fluid-indicator-glow"
-              style={{ top: '50%' }}
-            >
-              <div className="relative">
-                <div className="w-8 h-8 rounded-full bg-[#FFF9E1] opacity-30 blur-xl" />
-                <div className="absolute inset-0 w-6 h-6 rounded-full bg-[#FFF9E1] opacity-50 blur-md m-auto" />
-                <div className="absolute inset-0 w-3 h-3 rounded-full bg-[#FFF9E1] m-auto" />
-              </div>
-            </div>
-          )}
-          
           <button
             ref={institucionesRef}
             onClick={() => handlePathSelection('instituciones')}
             onMouseEnter={() => handleHover('instituciones')}
             onMouseLeave={() => handleHover(null)}
             className={cn(
-              "group relative px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300",
+              "group relative px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 overflow-hidden",
               selectedPath === 'instituciones'
-                ? "kova-selector-gradient text-[#FFF9E1] shadow-lg scale-105 kova-glow-active"
+                ? "border-2 border-[#FFF9E1] text-[#FFF9E1] shadow-lg scale-105"
                 : selectedPath
-                ? "bg-gray-100 text-gray-600 opacity-50"
-                : "kova-selector-gradient text-[#FFF9E1] hover:shadow-lg kova-glow-base hover:kova-glow-hover",
+                ? "border-2 border-gray-300 text-gray-600 opacity-50"
+                : "border-2 border-[#FFF9E1] text-[#FFF9E1] hover:shadow-lg",
               "focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2"
             )}
           >
-            <span className="flex items-center gap-2">
+            {/* Liquid fill background */}
+            <div 
+              className="liquid-fill absolute inset-0 kova-selector-gradient origin-left"
+              style={{ transform: 'scaleX(0)' }}
+            />
+            <span className="relative z-10 flex items-center gap-2">
               <Building2 className="w-5 h-5" />
               Instituciones
               <ChevronRight className="w-4 h-4" />
@@ -422,16 +379,21 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
             onMouseEnter={() => handleHover('aliados')}
             onMouseLeave={() => handleHover(null)}
             className={cn(
-              "group relative px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300",
+              "group relative px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300 overflow-hidden",
               selectedPath === 'aliados'
-                ? "kova-selector-gradient text-[#FFF9E1] shadow-lg scale-105 kova-glow-active"
+                ? "border-2 border-[#FFF9E1] text-[#FFF9E1] shadow-lg scale-105"
                 : selectedPath
-                ? "bg-gray-100 text-gray-600 opacity-50"
-                : "kova-selector-gradient text-[#FFF9E1] hover:shadow-lg kova-glow-base hover:kova-glow-hover",
+                ? "border-2 border-gray-300 text-gray-600 opacity-50"
+                : "border-2 border-[#FFF9E1] text-[#FFF9E1] hover:shadow-lg",
               "focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2"
             )}
           >
-            <span className="flex items-center gap-2">
+            {/* Liquid fill background */}
+            <div 
+              className="liquid-fill absolute inset-0 kova-selector-gradient origin-left"
+              style={{ transform: 'scaleX(0)' }}
+            />
+            <span className="relative z-10 flex items-center gap-2">
               <Users className="w-5 h-5" />
               Aliados
               <ChevronRight className="w-4 h-4" />

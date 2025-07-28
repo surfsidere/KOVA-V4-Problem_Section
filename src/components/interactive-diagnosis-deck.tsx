@@ -107,9 +107,9 @@ export const InteractiveDiagnosisDeck = ({
 
   return (
     <>
-      
-      <div className="fixed inset-0 pointer-events-none z-10">
-        <div className="relative w-full h-full flex items-center justify-center">
+      {/* Cards now work within flex container instead of fixed positioning */}
+      <div className="relative w-full pointer-events-none">
+        <div className="relative w-full flex items-center justify-center" style={{ minHeight: 'clamp(300px, 40vh, 500px)' }}>
           <div className="relative pointer-events-auto">
         <AnimatePresence mode="wait">
           {painPoints.map((painPoint, index) => {
@@ -250,6 +250,7 @@ export const InteractiveDiagnosisDeck = ({
             );
           })}
         </AnimatePresence>
+          </div>
           </div>
         </div>
       </div>

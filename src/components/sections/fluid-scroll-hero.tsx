@@ -143,14 +143,30 @@ export function FluidScrollHero({
         ease: "power2.out"
       }, 3.5);  // Final subtitle completes the story
 
-    // Simple sticky behavior - clean and responsive
-    ScrollTrigger.create({
-      trigger: stickyEl,
-      start: "center center",
-      end: "+=100vh",
-      pin: true,
-      pinSpacing: true
-    });
+    // Responsive sticky behavior - dynamic pin with viewport awareness
+    const createResponsiveSticky = () => {
+      const isMobile = window.innerWidth < 768;
+      const tabletBreak = window.innerWidth < 1024;
+      
+      // Dynamic viewport height based on device
+      const viewportMultiplier = isMobile ? 0.8 : tabletBreak ? 0.9 : 1.0;
+      const dynamicEnd = window.innerHeight * viewportMultiplier;
+      
+      return ScrollTrigger.create({
+        trigger: stickyEl,
+        start: "center center",
+        end: `+=${dynamicEnd}`,
+        pin: true,
+        pinSpacing: true,
+        refreshPriority: 1,
+        onRefresh: () => {
+          // Allow container to recalculate dimensions on resize
+          console.log('ScrollTrigger refreshed for responsive pin');
+        }
+      });
+    };
+    
+    let stickyTrigger = createResponsiveSticky();
 
     // Vacuum exit - everything gets sucked up together
     ScrollTrigger.create({
@@ -183,8 +199,21 @@ export function FluidScrollHero({
       }
     });
 
-    // Simple responsive behavior - no conflicts
-    const handleResize = () => ScrollTrigger.refresh();
+    // Enhanced responsive behavior with pin recreation
+    const handleResize = () => {
+      // Kill the existing sticky trigger only
+      if (stickyTrigger) {
+        stickyTrigger.kill();
+      }
+      
+      // Recreate with new responsive dimensions after brief delay
+      setTimeout(() => {
+        const newStickyTrigger = createResponsiveSticky();
+        // Update reference for cleanup
+        stickyTrigger = newStickyTrigger;
+      }, 50); // Minimal delay for dimension recalculation
+    };
+    
     window.addEventListener('resize', handleResize);
     
     return () => {
@@ -202,16 +231,17 @@ export function FluidScrollHero({
       ref={containerRef}
       className={cn("relative bg-[#F5F5F5] z-10", className)}
     >
-      {/* Spacer for proper scroll distance */}
-      <div className="h-[50vh]" />
+      {/* Responsive spacer for proper scroll distance */}
+      <div className="kova-spacing-xl" style={{ minHeight: 'clamp(20vh, 8vw, 50vh)' }} />
       
       {/* TWO-SCENE THEATER: Full viewport orchestration */}
       <div 
         ref={stickyRef}
-        className="relative min-h-screen flex flex-col px-6"
+        className="relative flex flex-col px-6"
+        style={{ minHeight: 'clamp(80vh, 100vw, 100vh)' }}
       >
-        {/* SCENE 1: Title - Top third of viewport (RESTORED ORIGINAL) */}
-        <div className="flex-1 flex items-end justify-center pb-8">
+        {/* SCENE 1: Title - Top third of viewport with responsive spacing */}
+        <div className="flex-1 flex items-end justify-center kova-spacing-md" style={{ paddingBottom: 'clamp(1rem, 3vw, 2rem)' }}>
           <div className="text-center max-w-5xl">
             <h1 
               ref={titleRef}
@@ -226,8 +256,8 @@ export function FluidScrollHero({
           </div>
         </div>
         
-        {/* SCENE 2: Cards - Center stage with breathing room (RESTORED ORIGINAL) */}
-        <div className="flex-1 flex items-center justify-center py-16">
+        {/* SCENE 2: Cards - Center stage with responsive breathing room */}
+        <div className="flex-1 flex items-center justify-center kova-spacing-lg" style={{ padding: 'clamp(2rem, 5vw, 4rem) 0' }}>
           <div 
             ref={cardsRef}
             className="w-full"
@@ -237,8 +267,8 @@ export function FluidScrollHero({
           </div>
         </div>
         
-        {/* SCENE 3: Subtitle - Bottom third of viewport (RESTORED ORIGINAL) */}
-        <div className="flex-1 flex items-start justify-center pt-8">
+        {/* SCENE 3: Subtitle - Bottom third of viewport with responsive spacing */}
+        <div className="flex-1 flex items-start justify-center kova-spacing-md" style={{ paddingTop: 'clamp(1rem, 3vw, 2rem)' }}>
           <div className="text-center max-w-4xl">
             <p 
               ref={subtitleRef}
@@ -250,8 +280,8 @@ export function FluidScrollHero({
         </div>
       </div>
       
-      {/* Spacer for vacuum effect */}
-      <div className="h-[10vh]" />
+      {/* Responsive spacer for vacuum effect */}
+      <div className="kova-spacing-md" style={{ minHeight: 'clamp(5vh, 3vw, 10vh)' }} />
     </section>
   );
 }

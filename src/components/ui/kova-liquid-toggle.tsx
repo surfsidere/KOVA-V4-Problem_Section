@@ -55,8 +55,8 @@ export function KovaLiquidToggle({
   };
 
   const getTextColor = (option: 'instituciones' | 'aliados') => {
-    if (selected === option) return 'text-[#0d1b2a] font-semibold';
-    return 'text-[#FFF9E1]';
+    if (selected === option) return 'text-[#FFF9E1] font-semibold';
+    return 'text-[#0d1b2a]';
   };
 
   const handleOptionClick = (option: 'instituciones' | 'aliados') => {
@@ -97,19 +97,19 @@ export function KovaLiquidToggle({
 
   return (
     <div 
-      className={cn("relative mx-auto", className)}
+      className={cn("relative flex justify-center items-center", className)}
       role="radiogroup"
       aria-label="Seleccionar tipo de usuario"
     >
       {/* Main Toggle Container */}
-      <div className="relative w-[400px] h-[60px] bg-gradient-to-r from-[#0d1b2a] via-[#415a77] to-[#0d1b2a] rounded-full border-2 border-[#FFF9E1] shadow-lg overflow-hidden">
+      <div className="relative w-[400px] h-[60px] bg-[#FFF9E1] rounded-full border-2 border-[#415a77] shadow-lg overflow-hidden">
         
         {/* Sliding Indicator */}
         <div 
           ref={indicatorRef}
-          className="absolute top-1 left-1 w-[196px] h-[52px] bg-[#FFF9E1] rounded-full shadow-md transition-all duration-300 ease-out transform will-change-transform"
+          className="absolute top-1 left-1 w-[196px] h-[52px] bg-gradient-to-r from-[#0d1b2a] via-[#415a77] to-[#0d1b2a] rounded-full shadow-md transition-all duration-300 ease-out transform will-change-transform"
           style={{
-            filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.15))'
+            filter: 'drop-shadow(0 2px 8px rgba(0,0,0,0.25))'
           }}
         />
         
@@ -125,7 +125,7 @@ export function KovaLiquidToggle({
           tabIndex={0}
           className={cn(
             "absolute left-0 top-0 w-[200px] h-full flex items-center justify-center gap-2 z-10 transition-all duration-200",
-            "hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2 focus:ring-offset-[#0d1b2a] rounded-full",
+            "hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#415a77] focus:ring-offset-2 focus:ring-offset-[#FFF9E1] rounded-full",
             "transform-gpu will-change-transform",
             getTextColor('instituciones'),
             hoveredOption === 'instituciones' && "scale-105",
@@ -152,7 +152,7 @@ export function KovaLiquidToggle({
           tabIndex={0}
           className={cn(
             "absolute right-0 top-0 w-[200px] h-full flex items-center justify-center gap-2 z-10 transition-all duration-200",
-            "hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2 focus:ring-offset-[#0d1b2a] rounded-full",
+            "hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#415a77] focus:ring-offset-2 focus:ring-offset-[#FFF9E1] rounded-full",
             "transform-gpu will-change-transform",
             getTextColor('aliados'),
             hoveredOption === 'aliados' && "scale-105",
@@ -172,10 +172,10 @@ export function KovaLiquidToggle({
       <div 
         className="absolute inset-0 rounded-full transition-all duration-300 pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(255,249,225,0.15) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(65,90,119,0.3) 0%, transparent 70%)',
           opacity: selected ? 1.0 : hoveredOption ? 0.7 : 0.5,
           transform: `scale(${selected ? 1.1 : hoveredOption ? 1.05 : 1})`,
-          filter: `blur(${selected ? '8px' : hoveredOption ? '6px' : '4px'})`
+          filter: `blur(${selected ? '12px' : hoveredOption ? '8px' : '6px'})`
         }}
       />
     </div>

@@ -220,11 +220,22 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
           className="mx-auto"
         />
 
-        {/* Dynamic Content Section */}
-        <div className="mt-8">
+        {/* Premium Dynamic Content Section */}
+        <div className="mt-16 lg:mt-20">
           <ToggleContentSection 
             selected={selectedPath}
             className="mx-auto"
+            onDiscoverMore={() => {
+              // Smooth scroll to next section with premium timing
+              const nextSection = document.querySelector('[data-next-section]') || 
+                                document.querySelector('section:nth-of-type(3)');
+              if (nextSection) {
+                nextSection.scrollIntoView({ 
+                  behavior: 'smooth',
+                  block: 'start'
+                });
+              }
+            }}
           />
         </div>
       </div>

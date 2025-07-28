@@ -149,6 +149,26 @@
   .kova-glow-active {
     filter: drop-shadow(0 0 8px rgba(255,249,225,0.9));
   }
+
+  /* Fluid selector indicator */
+  .kova-fluid-indicator {
+    pointer-events: none;
+    z-index: 10;
+    position: absolute;
+  }
+
+  .kova-fluid-indicator-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% {
+      filter: drop-shadow(0 0 8px rgba(255,249,225,0.6));
+    }
+    50% {
+      filter: drop-shadow(0 0 16px rgba(255,249,225,0.8));
+    }
+  }
   
   /* Reduced motion support */
   @media (prefers-reduced-motion: reduce) {

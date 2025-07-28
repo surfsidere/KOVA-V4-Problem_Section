@@ -87,6 +87,14 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
   const methodsRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLDivElement>(null);
   const [selectedPath, setSelectedPath] = useState<'instituciones' | 'aliados' | null>(null);
+  
+  // Fluid selector animation states
+  const [isAnimating, setIsAnimating] = useState(true);
+  const [hoveredOption, setHoveredOption] = useState<'instituciones' | 'aliados' | null>(null);
+  const indicatorRef = useRef<HTMLDivElement>(null);
+  const institucionesRef = useRef<HTMLButtonElement>(null);
+  const aliadosRef = useRef<HTMLButtonElement>(null);
+  const animationTimeline = useRef<gsap.core.Timeline | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -156,8 +164,101 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
     };
   }, []);
 
+  // Fluid selector animation
+  useEffect(() => {
+    if (!indicatorRef.current || !institucionesRef.current || !aliadosRef.current || selectedPath) return;
+
+    const indicator = indicatorRef.current;
+    const instituciones = institucionesRef.current;
+    const aliados = aliadosRef.current;
+
+    // Calculate positions
+    const updatePositions = () => {
+      const institucionesRect = instituciones.getBoundingClientRect();
+      const aliadosRect = aliados.getBoundingClientRect();
+      const containerRect = indicator.parentElement?.getBoundingClientRect();
+      
+      if (!containerRect) return;
+
+      return {
+        institucionesX: institucionesRect.left - containerRect.left + institucionesRect.width / 2,
+        aliadosX: aliadosRect.left - containerRect.left + aliadosRect.width / 2,
+        centerY: institucionesRect.height / 2
+      };
+    };
+
+    const positions = updatePositions();
+    if (!positions) return;
+
+    // Set initial position
+    gsap.set(indicator, {
+      x: positions.institucionesX,
+      y: positions.centerY,
+      xPercent: -50,
+      yPercent: -50,
+      opacity: 0
+    });
+
+    // Create oscillating timeline
+    animationTimeline.current = gsap.timeline({
+      repeat: -1,
+      yoyo: true,
+      paused: !isAnimating,
+      delay: 0.5
+    });
+
+    // Fade in and start oscillating
+    gsap.to(indicator, {
+      opacity: 1,
+      duration: 0.5,
+      ease: "power2.out"
+    });
+
+    animationTimeline.current
+      .to(indicator, {
+        x: positions.aliadosX,
+        duration: 3,
+        ease: "sine.inOut"
+      })
+      .to(indicator, {
+        x: positions.institucionesX,
+        duration: 3,
+        ease: "sine.inOut"
+      });
+
+    // Breathing glow animation
+    gsap.to(indicator, {
+      scale: 1.1,
+      duration: 1.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut"
+    });
+
+    return () => {
+      animationTimeline.current?.kill();
+      gsap.killTweensOf(indicator);
+    };
+  }, [isAnimating, selectedPath]);
+
   const handlePathSelection = (path: 'instituciones' | 'aliados') => {
     setSelectedPath(path);
+    setIsAnimating(false);
+    
+    // Lock indicator to selected position
+    if (indicatorRef.current && (path === 'instituciones' ? institucionesRef.current : aliadosRef.current)) {
+      const targetButton = path === 'instituciones' ? institucionesRef.current : aliadosRef.current;
+      const containerRect = indicatorRef.current.parentElement?.getBoundingClientRect();
+      const buttonRect = targetButton.getBoundingClientRect();
+      
+      if (containerRect) {
+        gsap.to(indicatorRef.current, {
+          x: buttonRect.left - containerRect.left + buttonRect.width / 2,
+          duration: 0.5,
+          ease: "power3.out"
+        });
+      }
+    }
     
     // Premium interaction feedback
     if (toggleRef.current) {
@@ -168,6 +269,35 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
         repeat: 1,
         ease: "power2.inOut"
       });
+    }
+  };
+
+  const handleHover = (option: 'instituciones' | 'aliados' | null) => {
+    if (selectedPath) return; // Don't animate if already selected
+    
+    setHoveredOption(option);
+    
+    if (option) {
+      // Pause main animation
+      animationTimeline.current?.pause();
+      
+      // Move indicator to hovered button
+      if (indicatorRef.current && (option === 'instituciones' ? institucionesRef.current : aliadosRef.current)) {
+        const targetButton = option === 'instituciones' ? institucionesRef.current : aliadosRef.current;
+        const containerRect = indicatorRef.current.parentElement?.getBoundingClientRect();
+        const buttonRect = targetButton.getBoundingClientRect();
+        
+        if (containerRect) {
+          gsap.to(indicatorRef.current, {
+            x: buttonRect.left - containerRect.left + buttonRect.width / 2,
+            duration: 0.3,
+            ease: "power2.out"
+          });
+        }
+      }
+    } else {
+      // Resume animation
+      animationTimeline.current?.play();
     }
   };
 
@@ -246,16 +376,35 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
           ¿Cuál es tu enfoque?
         </h3>
         
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div className="relative flex flex-col sm:flex-row gap-4 justify-center items-center">
+          {/* Floating Indicator */}
+          {!selectedPath && (
+            <div 
+              ref={indicatorRef}
+              className="kova-fluid-indicator kova-fluid-indicator-glow"
+              style={{ top: '50%' }}
+            >
+              <div className="relative">
+                <div className="w-8 h-8 rounded-full bg-[#FFF9E1] opacity-30 blur-xl" />
+                <div className="absolute inset-0 w-6 h-6 rounded-full bg-[#FFF9E1] opacity-50 blur-md m-auto" />
+                <div className="absolute inset-0 w-3 h-3 rounded-full bg-[#FFF9E1] m-auto" />
+              </div>
+            </div>
+          )}
+          
           <button
+            ref={institucionesRef}
             onClick={() => handlePathSelection('instituciones')}
+            onMouseEnter={() => handleHover('instituciones')}
+            onMouseLeave={() => handleHover(null)}
             className={cn(
               "group relative px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300",
-              "kova-selector-gradient text-[#FFF9E1] hover:shadow-lg",
-              "focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2",
-              selectedPath === 'instituciones' 
-                ? "shadow-lg scale-105 kova-glow-active" 
-                : "kova-glow-base hover:kova-glow-hover"
+              selectedPath === 'instituciones'
+                ? "kova-selector-gradient text-[#FFF9E1] shadow-lg scale-105 kova-glow-active"
+                : selectedPath
+                ? "bg-gray-100 text-gray-600 opacity-50"
+                : "kova-selector-gradient text-[#FFF9E1] hover:shadow-lg kova-glow-base hover:kova-glow-hover",
+              "focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2"
             )}
           >
             <span className="flex items-center gap-2">
@@ -265,17 +414,21 @@ export function PremiumSolutionSection({ className }: PremiumSolutionSectionProp
             </span>
           </button>
 
-          <div className="kova-light-secondary font-medium">o</div>
+          <div className="kova-light-secondary font-medium z-0">o</div>
 
           <button
+            ref={aliadosRef}
             onClick={() => handlePathSelection('aliados')}
+            onMouseEnter={() => handleHover('aliados')}
+            onMouseLeave={() => handleHover(null)}
             className={cn(
               "group relative px-8 py-4 rounded-full font-semibold text-lg transition-all duration-300",
-              "kova-selector-gradient text-[#FFF9E1] hover:shadow-lg",
-              "focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2",
-              selectedPath === 'aliados' 
-                ? "shadow-lg scale-105 kova-glow-active" 
-                : "kova-glow-base hover:kova-glow-hover"
+              selectedPath === 'aliados'
+                ? "kova-selector-gradient text-[#FFF9E1] shadow-lg scale-105 kova-glow-active"
+                : selectedPath
+                ? "bg-gray-100 text-gray-600 opacity-50"
+                : "kova-selector-gradient text-[#FFF9E1] hover:shadow-lg kova-glow-base hover:kova-glow-hover",
+              "focus:outline-none focus:ring-2 focus:ring-[#FFF9E1] focus:ring-offset-2"
             )}
           >
             <span className="flex items-center gap-2">

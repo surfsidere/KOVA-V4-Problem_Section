@@ -67,12 +67,11 @@ export const InteractiveDiagnosisDeck = ({
   };
 
   const getCardPosition = (index: number, total: number) => {
-    // Responsive card positioning based on screen size
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-    const isTablet = typeof window !== 'undefined' && window.innerWidth < 1024;
+    // Responsive card positioning - consistent with spacing breakpoints
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     
-    // Adaptive spacing based on viewport
-    const baseOffset = isMobile ? 40 : isTablet ? 50 : 60;
+    // Adaptive spacing based on viewport (simplified)
+    const baseOffset = isMobile ? 40 : 60;
     const verticalSpacing = isMobile ? 15 : 25;
     const rotationBase = isMobile ? 4 : 6;
     
@@ -91,8 +90,8 @@ export const InteractiveDiagnosisDeck = ({
   };
 
   const getInactiveCardPosition = (index: number, selectedIndex: number) => {
-    // Responsive inactive positioning
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+    // Responsive inactive positioning - consistent breakpoint
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     const offset = index < selectedIndex ? (isMobile ? -80 : -120) : (isMobile ? 80 : 120);
     const centerX = 0;
     const centerY = 0;

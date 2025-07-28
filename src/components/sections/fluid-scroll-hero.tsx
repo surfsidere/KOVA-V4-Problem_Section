@@ -219,8 +219,8 @@ export function FluidScrollHero({
         ref={stickyRef}
         className="relative min-h-screen flex flex-col px-4 sm:px-6 lg:px-8"
       >
-        {/* SCENE 1: Title - Adaptive spacing for mobile card prominence */}
-        <div className="flex-[0.3] md:flex-1 flex items-end justify-center pb-8 sm:pb-12 md:pb-16 lg:pb-20">
+        {/* SCENE 1: Title - Mobile adaptive spacing for card prominence */}
+        <div className="flex-[3] md:flex-1 flex items-end justify-center pb-8 sm:pb-12 md:pb-16 lg:pb-20">
           <div className="text-center max-w-5xl px-4">
             <h1 
               ref={titleRef}
@@ -235,8 +235,8 @@ export function FluidScrollHero({
           </div>
         </div>
         
-        {/* SCENE 2: Cards - Mobile prominence accommodation with desktop balance */}
-        <div className="flex-[0.4] md:flex-1 flex items-center justify-center py-12 sm:py-16 md:py-20 lg:py-24">
+        {/* SCENE 2: Cards - Center prominence with mobile/desktop balance */}
+        <div className="flex-[4] md:flex-1 flex items-center justify-center py-12 sm:py-16 md:py-20 lg:py-24">
           <div 
             ref={cardsRef}
             className="w-full px-4"
@@ -246,8 +246,8 @@ export function FluidScrollHero({
           </div>
         </div>
         
-        {/* SCENE 3: Subtitle - Balanced spacing with mobile optimization */}
-        <div className="flex-[0.3] md:flex-1 flex items-start justify-center pt-8 sm:pt-12 md:pt-16 lg:pt-20">
+        {/* SCENE 3: Subtitle - Mobile adaptive spacing balance */}
+        <div className="flex-[3] md:flex-1 flex items-start justify-center pt-8 sm:pt-12 md:pt-16 lg:pt-20">
           <div className="text-center max-w-4xl px-4">
             <p 
               ref={subtitleRef}

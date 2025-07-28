@@ -30,22 +30,22 @@ export const KOVA_DESIGN = {
     }
   },
   
-  // Spacing System with dramatic responsive scaling
+  // Spacing System - mobile reasonable, desktop/tablet reduced by 50%
   spacing: {
-    xs: 'clamp(1rem, 3vw, 2rem)',      // 16-32px
-    sm: 'clamp(2rem, 6vw, 4rem)',      // 32-64px
-    md: 'clamp(3rem, 10vw, 8rem)',     // 48-128px
-    lg: 'clamp(4rem, 15vw, 12rem)',    // 64-192px
-    xl: 'clamp(5rem, 20vw, 16rem)',    // 80-256px
+    xs: 'clamp(1rem, 3vw, 1.5rem)',    // 16-24px (was 32px)
+    sm: 'clamp(2rem, 6vw, 3rem)',      // 32-48px (was 64px)  
+    md: 'clamp(3rem, 8vw, 4rem)',      // 48-64px (was 128px)
+    lg: 'clamp(4rem, 10vw, 6rem)',     // 64-96px (was 192px)
+    xl: 'clamp(5rem, 12vw, 8rem)',     // 80-128px (was 256px)
     
     // Container padding
-    containerPadding: 'clamp(1.5rem, 4vw, 3rem)',
+    containerPadding: 'clamp(1.5rem, 4vw, 2rem)',
     
-    // Section spacers
+    // Section spacers - 50% reduction on desktop
     sectionSpacer: {
-      sm: 'clamp(10vh, 15vw, 20vh)',
-      md: 'clamp(20vh, 30vw, 40vh)',
-      lg: 'clamp(30vh, 40vw, 50vh)'
+      sm: 'clamp(10vh, 12vw, 15vh)',   // Reduced from 20vh
+      md: 'clamp(20vh, 25vw, 30vh)',   // Reduced from 40vh  
+      lg: 'clamp(30vh, 35vw, 40vh)'    // Reduced from 50vh
     }
   },
   

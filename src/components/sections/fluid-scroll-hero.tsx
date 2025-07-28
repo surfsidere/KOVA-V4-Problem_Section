@@ -27,16 +27,13 @@ export function FluidScrollHero({
   const titleRef = useRef<HTMLHeadingElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
     const titleEl = titleRef.current;
     const cardsEl = cardsRef.current;
     const subtitleEl = subtitleRef.current;
-    const stickyEl = stickyRef.current;
-
-    if (!container || !titleEl || !cardsEl || !subtitleEl || !stickyEl) return;
+    if (!container || !titleEl || !cardsEl || !subtitleEl) return;
 
     // Check for reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -107,51 +104,10 @@ export function FluidScrollHero({
         ease: "power2.out"
       }, 3.5);  // Final subtitle completes the story
 
-    // Simple sticky behavior - let smooth-scroll-provider handle resizes
-    ScrollTrigger.create({
-      trigger: stickyEl,
-      start: "top top",
-      end: "+=200%",
-      pin: true,
-      pinSpacing: true,
-      invalidateOnRefresh: true
-    });
-
-    // Vacuum exit - everything gets sucked up together
-    ScrollTrigger.create({
-      trigger: stickyEl,
-      start: "bottom 60%",
-      end: "bottom top",
-      scrub: 1,
-      onUpdate: (self) => {
-        const progress = self.progress;
-        
-        // Disable card interactions during exit
-        if (cardsEl && progress > 0) {
-          cardsEl.style.pointerEvents = 'none';
-        }
-        
-        // Professional vacuum effect  
-        gsap.to([titleEl, subtitleEl], {
-          opacity: Math.max(0, 1 - progress * 1.8),
-          y: -progress * 200,
-          scale: Math.max(0.2, 1 - progress * 0.8),
-          rotation: progress * 10,
-          duration: 0.1,
-          ease: "power2.in"
-        });
-        gsap.to(cardsEl, {
-          opacity: Math.max(0, 1 - progress * 1.8),
-          duration: 0.1,
-          ease: "power2.in"
-        });
-      }
-    });
-
-    // Cleanup - resize handling done by smooth-scroll-provider
+    // Cleanup
     return () => {
       ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.trigger === container || trigger.trigger === stickyEl) {
+        if (trigger.trigger === container) {
           trigger.kill();
         }
       });
@@ -168,7 +124,6 @@ export function FluidScrollHero({
       
       {/* TWO-SCENE THEATER: Full viewport orchestration */}
       <div 
-        ref={stickyRef}
         className="relative flex flex-col"
         style={{ minHeight: '100vh', padding: `0 ${KOVA_DESIGN.spacing.containerPadding}` }}
       >
@@ -211,9 +166,6 @@ export function FluidScrollHero({
           </div>
         </div>
       </div>
-      
-      {/* Responsive spacer for vacuum effect */}
-      <div style={{ height: KOVA_DESIGN.spacing.sectionSpacer.sm }} />
     </section>
   );
 }

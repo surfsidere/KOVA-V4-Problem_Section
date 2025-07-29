@@ -89,7 +89,7 @@ export const KOVA_DESIGN = {
   typography: {
     fonts: {
       primary: "'Space Grotesk', sans-serif",
-      secondary: "Arial, Helvetica, sans-serif",
+      secondary: "'Instrument Sans', sans-serif",
       body: "'Instrument Sans', sans-serif",
       headline: "'Space Grotesk', sans-serif"
     },

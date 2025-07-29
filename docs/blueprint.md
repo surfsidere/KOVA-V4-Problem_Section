@@ -12,7 +12,7 @@
 - Primary color: Vivid blue (#247BA0) for trust and professionalism.
 - Background color: Light blue (#E1F0FA) for a clean, unobtrusive backdrop.
 - Accent color: Muted cyan (#70C1B3) for interactive elements and highlights.
-- Headline font: 'Poppins' (sans-serif) for a modern, geometric look.
-- Body font: 'Inter' (sans-serif) for clear, readable text.
+- Headline font: 'Space Grotesk' (sans-serif) for a modern, geometric look.
+- Body font: 'Instrument Sans' (sans-serif) for clear, readable text.
 - Use simple, clear icons from RemixIcon to represent different pain points.
 - Use subtle animations for card transitions and hover effects to enhance user experience.

@@ -90,8 +90,8 @@ export const KOVA_DESIGN = {
     fonts: {
       primary: "'Space Grotesk', sans-serif",
       secondary: "Arial, Helvetica, sans-serif",
-      body: "'Inter', sans-serif",
-      headline: "'Poppins', sans-serif"
+      body: "'Instrument Sans', sans-serif",
+      headline: "'Space Grotesk', sans-serif"
     },
     
     // Responsive font sizes (CSS values, not Tailwind classes)

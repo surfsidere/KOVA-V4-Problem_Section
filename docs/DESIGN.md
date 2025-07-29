@@ -64,7 +64,7 @@
   background: linear-gradient(135deg, #0d1b2a 0%, #415a77 50%, #0d1b2a 100%);
   
   /* Premium typography */
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-weight: 500;
   letter-spacing: -0.01em;
   
@@ -157,25 +157,25 @@
 
 ### **Font System**
 
-#### **Primary Typeface - Inter**
+#### **Primary Typeface - Instrument Sans**
 ```css
 .font-primary {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-feature-settings: 'cv11', 'ss01';
   font-optical-sizing: auto;
 }
 ```
 
 **Characteristics:**
-- **Geometric precision** - Consistent character shapes
-- **Excellent readability** - Optimized for screens
+- **Modern precision** - Clean, contemporary character shapes
+- **Excellent readability** - Optimized for digital interfaces
 - **Professional tone** - Corporate-appropriate sophistication
-- **Multiple weights** - Light (300) to Bold (700)
+- **Multiple weights** - Regular (400) to Bold (700)
 
-#### **Accent Typeface - Poppins** (Headers Only)
+#### **Accent Typeface - Space Grotesk** (Headers Only)
 ```css
 .font-accent {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
@@ -209,7 +209,7 @@
 ```css
 /* H1 - Hero Headlines */
 .h1 {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   font-size: clamp(2.25rem, 7vw, 3rem);
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -219,7 +219,7 @@
 
 /* H2 - Section Headers */
 .h2 {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Instrument Sans', sans-serif;
   font-size: clamp(1.875rem, 6vw, 2.25rem);
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -229,7 +229,7 @@
 
 /* Body Text */
 .body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Instrument Sans', sans-serif;
   font-size: clamp(1rem, 3.5vw, 1.125rem);
   font-weight: 400;
   line-height: 1.6;

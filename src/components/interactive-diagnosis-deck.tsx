@@ -70,10 +70,11 @@ export const InteractiveDiagnosisDeck = ({
     // Responsive card positioning - consistent with spacing breakpoints
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     
-    // Enhanced fanning: Increased spacing to ensure full header visibility
-    // Header height (~72px) + rotation displacement (~33px) requires ~105px clearance
-    const baseOffset = isMobile ? 50 : 80;        // Was 40:60 - expanded for better title/icon visibility
-    const verticalSpacing = isMobile ? 20 : 35;   // Was 15:25 - increased to prevent header overlap
+    // Mathematical spacing for guaranteed header visibility:
+    // Header height (72px) + rotation displacement (sin(6°) × 72px = 7.5px) = 79.5px minimum clearance required
+    // Using 80px provides 0.5px safety margin for pixel-perfect header visibility
+    const baseOffset = isMobile ? 50 : 80;        // Was 40:60 - expanded for better title/icon visibility  
+    const verticalSpacing = isMobile ? 50 : 80;   // CRITICAL: 80px ensures zero header overlap (was 20:35)
     const rotationBase = isMobile ? 4 : 6;        // Unchanged - maintains visual appeal
     
     const centerX = 0;

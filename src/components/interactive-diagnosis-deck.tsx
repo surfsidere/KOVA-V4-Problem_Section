@@ -70,10 +70,11 @@ export const InteractiveDiagnosisDeck = ({
     // Responsive card positioning - consistent with spacing breakpoints
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     
-    // Adaptive spacing based on viewport (simplified)
-    const baseOffset = isMobile ? 40 : 60;
-    const verticalSpacing = isMobile ? 15 : 25;
-    const rotationBase = isMobile ? 4 : 6;
+    // Enhanced fanning: Increased spacing to ensure full header visibility
+    // Header height (~72px) + rotation displacement (~33px) requires ~105px clearance
+    const baseOffset = isMobile ? 50 : 80;        // Was 40:60 - expanded for better title/icon visibility
+    const verticalSpacing = isMobile ? 20 : 35;   // Was 15:25 - increased to prevent header overlap
+    const rotationBase = isMobile ? 4 : 6;        // Unchanged - maintains visual appeal
     
     const centerX = 0;
     const centerY = 0;
@@ -202,10 +203,6 @@ export const InteractiveDiagnosisDeck = ({
                     </div>
                   </div>
 
-                  {/* Warning icon - always visible for dramatic stacking effect */}
-                  <div className="absolute top-4 right-4 z-20">
-                    {painPoint.icon}
-                  </div>
 
                   {/* Card Content */}
                   <div className="p-6">
